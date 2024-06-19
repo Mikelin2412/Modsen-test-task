@@ -42,3 +42,8 @@ export const NavElement = styled.li`
   align-items: center;
   gap: 4px;
 `;
+
+export const Span = styled.span`
+  font-size: ${(props) => props.theme.sizes.p};
+  font-weight: ${(props) => props.theme.weights.regular};
+`;

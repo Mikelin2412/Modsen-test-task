@@ -24,3 +24,20 @@ export const GlobalStyles = createGlobalStyle`
 export const MainContent = styled.main`
   flex: 1;
 `;
+
+export const fontStyles = {
+  sizes: {
+    h1: '64px',
+    h3: '32px',
+    h4: '24px',
+    h5: '16px',
+    p: '16px',
+    span: '14px',
+  },
+  weights: {
+    bold: 700,
+    semi_bold: 600,
+    medium: 500,
+    regular: 400,
+  },
+};

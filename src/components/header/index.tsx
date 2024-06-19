@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heading, TopBar, Logo, NavList, NavElement } from './style';
+import { Heading, TopBar, Logo, NavList, NavElement, Span } from './style';
 import logo from '@assets/logos/museum-logo-light.svg';
 import bookmark from '@assets/icons/bookmark.svg';
 
@@ -11,8 +11,8 @@ const Header: React.FunctionComponent = () => {
         <nav>
           <NavList>
             <NavElement>
-              <img src={bookmark} alt='bookmark' />
-              Your favorites
+              <img src={bookmark} alt="bookmark" />
+              <Span>Your favorites</Span>
             </NavElement>
           </NavList>
         </nav>
