@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Favorites = () => {
+const Favorites: React.FunctionComponent = () => {
   return <div>Favorites!</div>;
 };
 

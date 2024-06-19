@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DetailedInfo = () => {
+const DetailedInfo: React.FunctionComponent = () => {
   return <div>Detailed Info!</div>;
 };
 
