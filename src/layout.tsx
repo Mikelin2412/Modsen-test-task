@@ -1,18 +1,20 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 import Header from '@components/header';
 import Footer from '@components/footer';
-import { GlobalStyles } from '@utils/global_styles';
+import { GlobalStyles, MainContent } from '@utils/global_styles';
 
 const Layout: React.FunctionComponent = () => {
   return (
     <>
       <GlobalStyles />
       <Header />
-      <Outlet />
+      <MainContent>
+        <Outlet />
+      </MainContent>
       <Footer />
     </>
   );
-}
+};
 
-export default Layout
+export default Layout;

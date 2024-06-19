@@ -11,6 +11,7 @@ export const Heading = styled.header`
 `;
 
 export const TopBar = styled.div`
+  margin: 0 50px;
   max-width: 1280px;
   width: 100%;
   display: flex;
