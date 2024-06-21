@@ -22,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const MainContent = styled.main`
+  margin: auto;
   flex: 1;
 `;
 

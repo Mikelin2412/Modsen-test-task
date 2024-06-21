@@ -1,6 +1,7 @@
 {
   "printWidth": 100,
   "tabWidth": 2,
+  "useTabs": false,
   "trailingComma": "all",
   "semi": true,
   "singleQuote": true,
@@ -8,5 +9,7 @@
   "arrowParens": "always",
   "jsxSingleQuote": false,
   "bracketSameLine": false,
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "object": "all",
+  "object-curly-newline": ["error", { "consistent": true }]
 }
