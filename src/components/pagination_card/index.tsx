@@ -9,6 +9,14 @@ interface Props {
 }
 
 const PaginationCard: React.FC<Props> = ({ artName, artistName, imageUrl }) => {
+  const handleSaveToFavorites = () => {
+    const favoriteItem = { artName, artistName, imageUrl };
+    const existingFavorites = localStorage.getItem('favorites');
+    const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
+    favorites.push(favoriteItem);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }
+
   return (
     <CardWrapper>
       <Image src={imageUrl} alt={artName} />
@@ -18,7 +26,7 @@ const PaginationCard: React.FC<Props> = ({ artName, artistName, imageUrl }) => {
           <Artist>{artistName}</Artist>
           <Public>Public</Public>
         </div>
-        <FavoritesButton>
+        <FavoritesButton onClick={handleSaveToFavorites}>
           <img src={bookmark} alt="bookmark" />
         </FavoritesButton>
       </InfoWrapper>

@@ -8,6 +8,7 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "jsxSingleQuote": false,
+  "jsxBracketSameLine": false,
   "bracketSameLine": false,
   "endOfLine": "auto",
   "object": "all",

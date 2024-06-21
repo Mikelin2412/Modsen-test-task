@@ -1,6 +1,7 @@
 import React from 'react';
 import { MainWrapper, Title, HighlightedWord, Input, SubtitleSmall, Subtitle } from './style';
 import Pagination from '@components/pagination';
+import CardsContainer from '@components/cards_container';
 
 const Home: React.FunctionComponent = () => {
   return (
@@ -14,6 +15,7 @@ const Home: React.FunctionComponent = () => {
       <Pagination></Pagination>
       <SubtitleSmall>Here some more</SubtitleSmall>
       <Subtitle>Other works for you</Subtitle>
+      <CardsContainer></CardsContainer>
     </MainWrapper>
   );
 };
