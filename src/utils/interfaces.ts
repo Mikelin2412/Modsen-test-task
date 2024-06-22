@@ -17,3 +17,9 @@ export interface IArtworkData {
   image?: string;
   image_id?: string;
 }
+
+export interface LocalStorageFavProps {
+  artName: string;
+  artistName: string;
+  imageUrl: string;
+}

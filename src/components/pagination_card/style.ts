@@ -47,7 +47,7 @@ export const Public = styled.p`
   color: #393939;
 `;
 
-export const FavoritesButton = styled.button`
+export const FavoritesButton = styled.button<{ isFavorite: boolean }>`
   width: 59px;
   height: 59px;
   display: flex;
@@ -55,6 +55,6 @@ export const FavoritesButton = styled.button`
   align-items: center;
   border: none;
   border-radius: 100%;
-  background-color: rgba(251, 215, 178, 30%);
+  background-color: ${(props) => (props.isFavorite ? 'rgba(251, 215, 178, 30%)' : '#F9F9F9')};
   cursor: pointer;
 `;

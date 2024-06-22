@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: <Favorites />,
       },
       {
-        path: DETAILED_INFO_ROUTE,
+        path: DETAILED_INFO_ROUTE + '/:id',
         element: <DetailedInfo />,
       },
     ],

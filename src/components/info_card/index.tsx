@@ -6,9 +6,10 @@ interface CardProps {
   artName: string;
   artistName: string;
   imageUrl: string;
+  handleFunction: () => void;
 }
 
-const Card: React.FC<CardProps> = ({ artName, artistName, imageUrl }) => {
+const Card: React.FC<CardProps> = ({ artName, artistName, imageUrl, handleFunction }) => {
   return (
     <CardBody>
       <Image src={imageUrl} alt={artName} />
@@ -18,7 +19,7 @@ const Card: React.FC<CardProps> = ({ artName, artistName, imageUrl }) => {
           <Artist>{artistName}</Artist>
           <Public>Public</Public>
         </div>
-        <FavoritesButton>
+        <FavoritesButton onClick={handleFunction}>
           <img src={bookmark} alt="bookmark" />
         </FavoritesButton>
       </InfoWrapper>

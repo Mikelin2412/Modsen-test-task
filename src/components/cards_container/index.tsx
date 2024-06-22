@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CardsWrapper } from './style';
-import Card from './card';
+import Card from '@components/info_card'
 import { IArtworkData } from '@utils/interfaces';
+import { LocalStorageFavProps } from '@utils/interfaces';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[] | null>(null);
@@ -34,6 +35,22 @@ const CardsContainer: React.FC = () => {
     fetchData(artsLimit);
   }, [artsLimit]);
 
+  const handleSaveToFavorites = ({ artName, artistName, imageUrl }: LocalStorageFavProps) => {
+    const favoriteItem = { artName, artistName, imageUrl };
+    const existingFavorites = localStorage.getItem('favorites');
+    const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
+
+    const isAlreadyFavorite = favorites.some(
+      (item: LocalStorageFavProps) =>
+        item.artName === artName && item.artistName === artistName && item.imageUrl === imageUrl,
+    );
+
+    if (!isAlreadyFavorite) {
+      favorites.push(favoriteItem);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+  };
+
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -49,7 +66,9 @@ const CardsContainer: React.FC = () => {
           key={art.id}
           artName={art.title}
           artistName={art.artist_title}
-          imageUrl={art.image} />
+          imageUrl={art.image}
+          handleFunction={() => handleSaveToFavorites({ artName: art.title, artistName: art.artist_title, imageUrl: art.image })}
+        />
       ))}
     </CardsWrapper>
   );
