@@ -1,7 +1,8 @@
 import React from 'react';
-import { MainWrapper, Title, HighlightedWord, Input, SubtitleSmall, Subtitle } from './style';
+import { MainWrapper, Title, HighlightedWord, SubtitleSmall, Subtitle } from './style';
 import Pagination from '@components/pagination';
 import CardsContainer from '@components/cards_container';
+import FormBody from '@components/form';
 
 const Home: React.FunctionComponent = () => {
   return (
@@ -9,7 +10,7 @@ const Home: React.FunctionComponent = () => {
       <Title>
         Let&apos;s Find Some <HighlightedWord>Art</HighlightedWord> Here!
       </Title>
-      <Input type="text" placeholder="Search art, artist, work..." />
+      <FormBody />
       <SubtitleSmall>Topics for you</SubtitleSmall>
       <Subtitle>Our special gallery</Subtitle>
       <Pagination></Pagination>
