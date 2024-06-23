@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { IArtworkData } from '@utils/interfaces';
+import { extractNationality } from '@utils/libs/libs';
+import {
+  DetailWrapper,
+  DetailInfo,
+  Image,
+  ArtName,
+  ArtistName,
+  Date,
+  Overview,
+  ParamName,
+  ParamValue,
+  ParamsWrapper,
+  ImageWrapper,
+  StyledFavoritesButton,
+} from './style';
+import useFavorites from '@utils/hooks/useFavorites';
+import { LocalStorageFavProps } from '@utils/interfaces';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  console.log(id)
   const [art, setArt] = useState<IArtworkData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const { isFavorite, setIsFavorite, handleSaveToFavorites } = useFavorites();
 
   useEffect(() => {
     const fetchArtDetails = async () => {
@@ -31,6 +48,21 @@ const DetailedInfo: React.FC = () => {
     fetchArtDetails();
   }, [id]);
 
+  useEffect(() => {
+    if (art) {
+      const existingFavorites = localStorage.getItem('favorites');
+      console.log(existingFavorites)
+      const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
+      const isAlreadyFavorite = favorites.some(
+        (item: LocalStorageFavProps) =>
+          item.artName === art.title &&
+          item.artistName === art.artist_title &&
+          item.imageUrl === art.image,
+      );
+      setIsFavorite(isAlreadyFavorite);
+    }
+  }, [art]);
+
   if (loading) {
     return <h1>Loading...</h1>;
   }
@@ -40,17 +72,43 @@ const DetailedInfo: React.FC = () => {
   }
 
   return (
-    <div>
+    <DetailWrapper>
       {art && (
         <>
-          <img src={art.image} alt={art.title} />
-          <h1>{art.title}</h1>
-          <h2>{art.artist_title}</h2>
-          <p>{art.date_display}</p>
-          <p>{art.dimensions}</p>
+          <ImageWrapper>
+            <Image src={art.image} alt={art.title} />
+            <StyledFavoritesButton
+              handleFunction={() => handleSaveToFavorites(art.id, art.title, art.artist_title, art.image)}
+              isFavorite={isFavorite} />
+          </ImageWrapper>
+          <DetailInfo>
+            <div>
+              <ArtName>{art.title}</ArtName>
+              <ArtistName>{art.artist_title}</ArtistName>
+              <Date>{art.date_display}</Date>
+            </div>
+            <div>
+              <Overview>Overview</Overview>
+              <ParamsWrapper>
+                <ParamName>
+                  Artist nationality:
+                  <ParamValue>{extractNationality(art.artist_display) ?? 'N/A'}</ParamValue>
+                </ParamName>
+                <ParamName>
+                  Dimensions:<ParamValue>{art.dimensions}</ParamValue>
+                </ParamName>
+                <ParamName>
+                  Credit Line:<ParamValue>{art.credit_line}</ParamValue>
+                </ParamName>
+                <ParamName>
+                  Repository:<ParamValue>{art.place_of_origin}</ParamValue>
+                </ParamName>
+              </ParamsWrapper>
+            </div>
+          </DetailInfo>
         </>
       )}
-    </div>
+    </DetailWrapper>
   );
 };
 

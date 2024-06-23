@@ -3,8 +3,6 @@ import { PaginationWrapper, PaginationBody } from './style';
 import PaginationCard from '@components/pagination_card';
 import { IArtworkData } from '@utils/interfaces';
 import PaginationControls from '@components/pagination_controls';
-import { Link } from 'react-router-dom';
-import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
 
 const Pagination: React.FC = () => {
   const [arts, setArts] = useState(null);
@@ -54,13 +52,13 @@ const Pagination: React.FC = () => {
     <PaginationWrapper>
       <PaginationBody>
         {arts.map((art: IArtworkData) => (
-          <Link key={art.id} to={DETAILED_INFO_ROUTE + `/${art.id}`}>
-            <PaginationCard
-              artName={art.title}
-              artistName={art.artist_title}
-              imageUrl={art.image}
-            />
-          </Link>
+          <PaginationCard
+            key={art.id}
+            id={art.id}
+            artName={art.title}
+            artistName={art.artist_title}
+            imageUrl={art.image}
+          />
         ))}
       </PaginationBody>
       <PaginationControls

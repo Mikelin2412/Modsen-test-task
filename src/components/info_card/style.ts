@@ -5,6 +5,7 @@ export const CardBody = styled.div`
   display: flex;
   gap: 16px;
   background-color: #fff;
+  cursor: pointer;
 `;
 
 export const Image = styled.img`

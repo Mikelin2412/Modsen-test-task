@@ -4,6 +4,7 @@ export const CardWrapper = styled.div`
   position: relative;
   width: 387px;
   height: 514px;
+  cursor: pointer;
 `;
 
 export const InfoWrapper = styled.div`
@@ -45,16 +46,4 @@ export const Public = styled.p`
   font-size: 15.35px;
   font-weight: ${(props) => props.theme.weights.medium};
   color: #393939;
-`;
-
-export const FavoritesButton = styled.button<{ isFavorite: boolean }>`
-  width: 59px;
-  height: 59px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 100%;
-  background-color: ${(props) => (props.isFavorite ? 'rgba(251, 215, 178, 30%)' : '#F9F9F9')};
-  cursor: pointer;
 `;

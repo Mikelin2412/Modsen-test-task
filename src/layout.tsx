@@ -4,7 +4,7 @@ import Header from '@components/header';
 import Footer from '@components/footer';
 import { GlobalStyles, MainContent, fontStyles } from '@utils/global_styles';
 import { ThemeProvider } from 'styled-components';
-import useFetch from '@utils/hooks';
+import useFetch from '@utils/hooks/useFetch';
 import { IArtworks } from '@utils/interfaces';
 
 export const ArtsProvider = createContext<IArtworks | null>(null);

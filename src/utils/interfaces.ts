@@ -16,9 +16,11 @@ export interface IArtworkData {
   credit_line?: string;
   image?: string;
   image_id?: string;
+  place_of_origin?: string;
 }
 
 export interface LocalStorageFavProps {
+  id: number;
   artName: string;
   artistName: string;
   imageUrl: string;
