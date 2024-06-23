@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { LocalStorageFavProps } from '@utils/interfaces';
 
-const useFavorites = (id?: number, artName?: string, artistName?: string, imageUrl?: string) => {
+const useFavorites = (
+  id?: number,
+  artName?: string,
+  artistName?: string,
+  imageUrl?: string,
+) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -9,7 +14,9 @@ const useFavorites = (id?: number, artName?: string, artistName?: string, imageU
     const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
     const isAlreadyFavorite = favorites.some(
       (item: LocalStorageFavProps) =>
-        item.artName === artName && item.artistName === artistName && item.imageUrl === imageUrl,
+        item.artName === artName &&
+        item.artistName === artistName &&
+        item.imageUrl === imageUrl,
     );
     setIsFavorite(isAlreadyFavorite);
   }, [artName, artistName, imageUrl]);
@@ -53,7 +60,12 @@ const useFavorites = (id?: number, artName?: string, artistName?: string, imageU
     const existingFavorites = localStorage.getItem('favorites');
     const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
     const updatedFavorites = favorites.filter(
-      (item: { id: number; artName: string; artistName: string; imageUrl: string }) =>
+      (item: {
+        id: number;
+        artName: string;
+        artistName: string;
+        imageUrl: string;
+      }) =>
         item.id !== id ||
         item.artName !== artName ||
         item.artistName !== artistName ||
@@ -63,7 +75,12 @@ const useFavorites = (id?: number, artName?: string, artistName?: string, imageU
     setIsFavorite(false);
   };
 
-  return { isFavorite, setIsFavorite, handleSaveToFavorites, handleRemoveFromFavorites };
+  return {
+    isFavorite,
+    setIsFavorite,
+    handleSaveToFavorites,
+    handleRemoveFromFavorites,
+  };
 };
 
 export default useFavorites;

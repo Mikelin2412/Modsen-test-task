@@ -33,7 +33,7 @@ export default [
       'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
       'react/function-component-definition': ['warn', { namedComponents: 'arrow-function' }],
       'react/self-closing-comp': ['error', { component: true, html: true }],
-      'max-lines': ['warn', { max: 120 }],
+      'max-lines': ['warn', { max: 80 }],
     },
     languageOptions: {
       parserOptions: {

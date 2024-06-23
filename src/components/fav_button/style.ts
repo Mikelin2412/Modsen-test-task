@@ -8,6 +8,7 @@ export const FavButton = styled.button<{ isFavorite: boolean }>`
   align-items: center;
   border: none;
   border-radius: 100%;
-  background-color: ${(props) => (props.isFavorite ? 'rgba(251, 215, 178, 100%)' : '#F9F9F9')};
+  background-color: ${(props) =>
+    props.isFavorite ? 'rgba(251, 215, 178, 100%)' : '#F9F9F9'};
   cursor: pointer;
 `;

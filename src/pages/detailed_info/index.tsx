@@ -78,30 +78,42 @@ const DetailedInfo: React.FC = () => {
           <ImageWrapper>
             <Image src={art.image} alt={art.title} />
             <StyledFavoritesButton
-              handleFunction={() => handleSaveToFavorites(art.id, art.title, art.artist_title, art.image)}
-              isFavorite={isFavorite} />
+              handleFunction={() =>
+                handleSaveToFavorites(
+                  art.id,
+                  art.title,
+                  art.artist_title,
+                  art.image,
+                )
+              }
+              isFavorite={isFavorite}
+            />
           </ImageWrapper>
           <DetailInfo>
             <div>
-              <ArtName>{art.title}</ArtName>
-              <ArtistName>{art.artist_title}</ArtistName>
-              <Date>{art.date_display}</Date>
+              <ArtName>{art.title ?? 'N/A'}</ArtName>
+              <ArtistName>{art.artist_title ?? 'N/A'}</ArtistName>
+              <Date>{art.date_display ?? 'N/A'}</Date>
             </div>
             <div>
               <Overview>Overview</Overview>
               <ParamsWrapper>
                 <ParamName>
                   Artist nationality:
-                  <ParamValue>{extractNationality(art.artist_display) ?? 'N/A'}</ParamValue>
+                  <ParamValue>
+                    {extractNationality(art.artist_display) ?? 'N/A'}
+                  </ParamValue>
                 </ParamName>
                 <ParamName>
-                  Dimensions:<ParamValue>{art.dimensions}</ParamValue>
+                  Dimensions:<ParamValue>{art.dimensions ?? 'N/A'}</ParamValue>
                 </ParamName>
                 <ParamName>
-                  Credit Line:<ParamValue>{art.credit_line}</ParamValue>
+                  Credit Line:
+                  <ParamValue>{art.credit_line ?? 'N/A'}</ParamValue>
                 </ParamName>
                 <ParamName>
-                  Repository:<ParamValue>{art.place_of_origin}</ParamValue>
+                  Repository:
+                  <ParamValue>{art.place_of_origin ?? 'N/A'}</ParamValue>
                 </ParamName>
               </ParamsWrapper>
             </div>

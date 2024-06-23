@@ -1,15 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { debounce } from '@utils/libs/libs';
+import { FieldContainer, DropdownMenu, DropdownItem } from './style';
+import { useNavigate } from 'react-router-dom';
+import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
+import { StyledField } from './style';
 
 interface FormValues {
   artName: string;
 }
 
+interface Artwork {
+  id: number;
+  title: string;
+}
+
 const FormBody: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Artwork[]>([]);
+  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     artName: Yup.string(),
@@ -26,8 +36,6 @@ const FormBody: React.FC = () => {
       );
       const data = await response.json();
       setResults(data.data);
-      console.log(data);
-      console.log(results);
     } else {
       setResults([]);
     }
@@ -58,8 +66,8 @@ const FormBody: React.FC = () => {
     >
       {({ setFieldValue }) => (
         <Form>
-          <div className="field">
-            <Field
+          <FieldContainer>
+            <StyledField
               name="artName"
               type="text"
               className="input"
@@ -69,7 +77,21 @@ const FormBody: React.FC = () => {
               }
             />
             <ErrorMessage name="artName" render={renderError} />
-          </div>
+            {results.length > 0 && (
+              <DropdownMenu>
+                {results.map((result) => (
+                  <DropdownItem
+                    key={result.id}
+                    onClick={() =>
+                      navigate(DETAILED_INFO_ROUTE + `/${result.id}`)
+                    }
+                  >
+                    {result.title}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            )}
+          </FieldContainer>
         </Form>
       )}
     </Formik>
