@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { useState, useEffect } from 'react';
 import { LocalStorageFavProps } from '@utils/interfaces';
 
@@ -20,7 +19,7 @@ const useFavorites = (
         item.imageUrl === imageUrl,
     );
     setIsFavorite(isAlreadyFavorite);
-  }, [artName, artistName, imageUrl]);
+  }, [id, artName, artistName, imageUrl]);
 
   const handleSaveToFavorites = (
     id: number,
@@ -57,30 +56,10 @@ const useFavorites = (
     }
   };
 
-  const handleRemoveFromFavorites = () => {
-    const existingFavorites = localStorage.getItem('favorites');
-    const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
-    const updatedFavorites = favorites.filter(
-      (item: {
-        id: number;
-        artName: string;
-        artistName: string;
-        imageUrl: string;
-      }) =>
-        item.id !== id ||
-        item.artName !== artName ||
-        item.artistName !== artistName ||
-        item.imageUrl !== imageUrl,
-    );
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
-    setIsFavorite(false);
-  };
-
   return {
     isFavorite,
     setIsFavorite,
     handleSaveToFavorites,
-    handleRemoveFromFavorites,
   };
 };
 

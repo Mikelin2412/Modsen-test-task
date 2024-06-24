@@ -1,8 +1,15 @@
 export interface IArtworks {
-  pagination: object;
+  pagination: {
+    total_pages: number;
+    limit: number;
+  };
   data: IArtworkData[];
   info: object;
   config: object;
+}
+
+export interface IArtworkFromAPI extends Omit<IArtworks, 'data'> {
+  data: IArtworkData;
 }
 
 export interface IArtworkData {
@@ -24,4 +31,16 @@ export interface LocalStorageFavProps {
   artName: string;
   artistName: string;
   imageUrl: string;
+}
+
+export interface PaginationControlsProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
+
+export interface IButton {
+  isFavorite: boolean;
+  handleFunction: () => void;
+  className?: string;
 }

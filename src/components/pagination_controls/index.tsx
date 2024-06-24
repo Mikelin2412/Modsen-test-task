@@ -1,11 +1,6 @@
 import React from 'react';
 import { Wrapper, PageButton } from './style';
-
-interface PaginationControlsProps {
-  totalPages: number;
-  currentPage: number;
-  onPageChange: (page: number) => void;
-}
+import { PaginationControlsProps } from '@utils/interfaces';
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
   totalPages,
@@ -23,7 +18,10 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
       endPage = Math.min(totalPages, endPage + (halfVisible - currentPage + 1));
     }
     if (currentPage + halfVisible > totalPages) {
-      startPage = Math.max(1, startPage - (currentPage + halfVisible - totalPages));
+      startPage = Math.max(
+        1,
+        startPage - (currentPage + halfVisible - totalPages),
+      );
     }
 
     for (let i = startPage; i <= endPage; i++) {
@@ -35,9 +33,13 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
 
   return (
     <Wrapper>
-      {currentPage > 1 && <PageButton onClick={() => onPageChange(1)}>&laquo;</PageButton>}
       {currentPage > 1 && (
-        <PageButton onClick={() => onPageChange(currentPage - 1)}>&lt;</PageButton>
+        <PageButton onClick={() => onPageChange(1)}>&laquo;</PageButton>
+      )}
+      {currentPage > 1 && (
+        <PageButton onClick={() => onPageChange(currentPage - 1)}>
+          &lt;
+        </PageButton>
       )}
       {generatePageNumbers().map((pageNumber) => (
         <PageButton
@@ -49,10 +51,14 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
         </PageButton>
       ))}
       {currentPage < totalPages && (
-        <PageButton onClick={() => onPageChange(currentPage + 1)}>&gt;</PageButton>
+        <PageButton onClick={() => onPageChange(currentPage + 1)}>
+          &gt;
+        </PageButton>
       )}
       {currentPage < totalPages && (
-        <PageButton onClick={() => onPageChange(totalPages)}>&raquo;</PageButton>
+        <PageButton onClick={() => onPageChange(totalPages)}>
+          &raquo;
+        </PageButton>
       )}
     </Wrapper>
   );

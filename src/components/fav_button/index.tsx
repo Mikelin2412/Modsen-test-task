@@ -1,12 +1,7 @@
 import React from 'react';
 import { FavButton } from './style';
 import bookmark from '@assets/icons/bookmark-orange.svg';
-
-interface IButton {
-  isFavorite: boolean;
-  handleFunction: () => void;
-  className?: string;
-}
+import { IButton } from '@utils/interfaces';
 
 const FavoritesButton: React.FC<IButton> = ({ handleFunction, isFavorite, className }) => {
   return (
