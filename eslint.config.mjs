@@ -30,12 +30,10 @@ export default [
     rules: {
       ...prettierPlugin.configs.recommended.rules,
       ...eslintConfigPrettier.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'prefer-const': 'error',
       'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
       'react/function-component-definition': ['warn', { namedComponents: 'arrow-function' }],
       'react/self-closing-comp': ['error', { component: true, html: true }],
-      'max-lines': ['warn', { max: 120 }],
+      'max-lines': ['warn', { max: 80 }],
     },
     languageOptions: {
       parserOptions: {
