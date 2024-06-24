@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const LoaderBody = styled.div`
   position: relative;
   top: 50%;
-  left: 50%;
+  align-self: center;
   margin-bottom: 50px;
 
   & > span {
