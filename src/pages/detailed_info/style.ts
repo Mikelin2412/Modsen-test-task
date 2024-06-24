@@ -1,17 +1,30 @@
+/* eslint-disable max-lines */
 import styled from 'styled-components';
 import FavoritesButton from '@components/fav_button';
 
 export const DetailWrapper = styled.div`
-  margin: 120px 0;
+  margin: 60px 20px;
   max-width: 1280px;
   display: flex;
-  gap: 80px;
+  gap: 30px;
+  flex-direction: column;
+
+  @media (min-width: 876px) {
+    margin: 120px 40px;
+    gap: 80px;
+    flex-direction: row;
+  }
 `;
 
 export const ImageWrapper = styled.div`
   position: relative;
   width: 497px;
-  height: 570px;
+  height: auto;
+
+  @media (max-width: 876px) {
+    max-width: 600px;
+    width: 100%;
+  }
 `;
 
 export const Image = styled.img`
@@ -35,6 +48,10 @@ export const ArtName = styled.h3`
   margin-bottom: 32px;
   font-size: ${(props) => props.theme.sizes.h3};
   font-weight: ${(props) => props.theme.weights.regular};
+
+  @media (max-width: 876px) {
+    font-size: ${(props) => props.theme.sizes.h4};
+  }
 `;
 
 export const ArtistName = styled.h4`
@@ -42,6 +59,10 @@ export const ArtistName = styled.h4`
   font-size: ${(props) => props.theme.sizes.h4};
   font-weight: ${(props) => props.theme.weights.regular};
   color: #e0a449;
+
+  @media (max-width: 876px) {
+    font-size: ${(props) => props.theme.sizes.h5};
+  }
 `;
 
 export const Date = styled.h5`
@@ -53,6 +74,11 @@ export const Overview = styled.h3`
   margin-bottom: 32px;
   font-size: ${(props) => props.theme.sizes.h3};
   font-weight: ${(props) => props.theme.weights.regular};
+
+  @media (max-width: 876px) {
+    margin-top: 40px;
+    font-size: ${(props) => props.theme.sizes.h4};
+  }
 `;
 
 export const ParamsWrapper = styled.div`
@@ -67,10 +93,18 @@ export const ParamName = styled.h5`
   font-size: ${(props) => props.theme.sizes.h5};
   font-weight: ${(props) => props.theme.weights.regular};
   color: #e0a449;
+
+  @media (max-width: 876px) {
+    font-size: ${(props) => props.theme.sizes.h6};
+  }
 `;
 
 export const ParamValue = styled.h5`
   font-size: ${(props) => props.theme.sizes.h5};
   font-weight: ${(props) => props.theme.weights.regular};
   color: #393939;
+
+  @media (max-width: 876px) {
+    font-size: ${(props) => props.theme.sizes.h6};
+  }
 `;

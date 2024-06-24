@@ -51,7 +51,6 @@ const DetailedInfo: React.FC = () => {
   useEffect(() => {
     if (art) {
       const existingFavorites = localStorage.getItem('favorites');
-      console.log(existingFavorites)
       const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
       const isAlreadyFavorite = favorites.some(
         (item: LocalStorageFavProps) =>

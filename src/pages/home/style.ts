@@ -16,6 +16,12 @@ export const Title = styled.h1`
   text-align: center;
   max-width: 684px;
   color: #393939;
+
+  @media screen and (max-width: 867px) {
+    margin-top: 60px;
+    font-size: ${(props) => props.theme.sizes.h3};
+    font-weight: ${(props) => props.theme.weights.bold};
+  }
 `;
 
 export const HighlightedWord = styled.span`

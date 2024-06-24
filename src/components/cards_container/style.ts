@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const CardsWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  row-gap: 16px;
-  column-gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 16px;
   margin-bottom: 120px;
+  width: 100%;
 `;

@@ -28,7 +28,7 @@ const Pagination: React.FC = () => {
           return { ...art, image: imageUrl };
         });
         setArts(transformedData);
-        setTotalPages(result.pagination.total_pages);
+        setTotalPages(Math.floor(result.pagination.total_pages / 2000));
         setArtsLimit(result.pagination.limit);
       } catch (e) {
         setError(e);

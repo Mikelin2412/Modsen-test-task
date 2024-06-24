@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { debounce } from '@utils/libs/libs';
 import { FieldContainer, DropdownMenu, DropdownItem } from './style';
 import { useNavigate } from 'react-router-dom';
 import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
-import { StyledField } from './style';
+import { StyledField, StyledForm } from './style';
 
 interface FormValues {
   artName: string;
@@ -41,7 +41,7 @@ const FormBody: React.FC = () => {
     }
   };
 
-  const debouncedSearch = useCallback(debounce(handleSearch, 500), []);
+  const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
 
   useEffect(() => {
     debouncedSearch(searchTerm);
@@ -65,7 +65,7 @@ const FormBody: React.FC = () => {
       onSubmit={() => {}}
     >
       {({ setFieldValue }) => (
-        <Form>
+        <StyledForm>
           <FieldContainer>
             <StyledField
               name="artName"
@@ -92,7 +92,7 @@ const FormBody: React.FC = () => {
               </DropdownMenu>
             )}
           </FieldContainer>
-        </Form>
+        </StyledForm>
       )}
     </Formik>
   );

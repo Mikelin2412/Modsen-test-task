@@ -18,7 +18,14 @@ export const InfoWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+`;
+
+export const InfoBlock = styled.div`
+  max-width: 220px;
+
+  @media screen and (max-width: 867px) {
+    max-width: 130px;
+  }
 `;
 
 export const ArtName = styled.p`

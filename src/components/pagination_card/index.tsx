@@ -18,17 +18,22 @@ const PaginationCard: React.FC<LocalStorageFavProps> = ({ id, artName, artistNam
   };
 
   return (
-      <CardWrapper onClick={handleClick}>
-        <Image src={imageUrl} alt={artName} />
-        <InfoWrapper>
-          <div>
-            <ArtName>{artName}</ArtName>
-            <Artist>{artistName}</Artist>
-            <Public>Public</Public>
-          </div>
-          <FavoritesButton handleFunction={() => handleSaveToFavorites(id, artName, artistName, imageUrl)} isFavorite={isFavorite} />
-        </InfoWrapper>
-      </CardWrapper>
+    <CardWrapper onClick={handleClick}>
+      <Image src={imageUrl} alt={artName} />
+      <InfoWrapper>
+        <div>
+          <ArtName>{artName ?? 'N/A'}</ArtName>
+          <Artist>{artistName ?? 'N/A'}</Artist>
+          <Public>Public</Public>
+        </div>
+        <FavoritesButton
+          handleFunction={() =>
+            handleSaveToFavorites(id, artName, artistName, imageUrl)
+          }
+          isFavorite={isFavorite}
+        />
+      </InfoWrapper>
+    </CardWrapper>
   );
 };
 

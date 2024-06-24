@@ -22,7 +22,10 @@ export const GlobalStyles = createGlobalStyle`
 `;
 
 export const MainContent = styled.main`
-  margin: auto;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
 `;
 

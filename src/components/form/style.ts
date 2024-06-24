@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import { Field } from 'formik';
+import { Field, Form } from 'formik';
 
 export const FieldContainer = styled.div`
   position: relative;
-  margin-top: 72px;
-  width: 762px;
 `;
 
 export const DropdownMenu = styled.div`
@@ -38,4 +36,10 @@ export const StyledField = styled(Field)`
     border-color: #e0a449;
     box-shadow: 0 0 5px rgba(224, 164, 73, 0.5);
   }
+`;
+
+export const StyledForm = styled(Form)`
+  margin-top: 72px;
+  max-width: 762px;
+  width: 100%;
 `;

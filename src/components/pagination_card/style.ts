@@ -2,18 +2,21 @@ import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
   position: relative;
-  width: 387px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 387px;
+  width: 100%;
   height: 514px;
   cursor: pointer;
 `;
 
 export const InfoWrapper = styled.div`
   position: absolute;
-  left: calc(100% / 2 - 334px / 2);
   bottom: 0;
-  width: 334px;
+  max-width: 334px;
+  width: 100%;
   height: 132px;
-  margin: auto;
   padding: 17px 24px;
   background-color: #fff;
 
@@ -24,8 +27,9 @@ export const InfoWrapper = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 387px;
+  width: 100%;
   height: 444px;
+  object-fit: cover;
 `;
 
 export const ArtName = styled.p`

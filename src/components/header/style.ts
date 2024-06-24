@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Heading = styled.header`
   width: 100%;
-  height: 127px;
   background: linear-gradient(-90deg, #343333 17%, #484848 59%, #282828 99%);
 
   display: flex;
@@ -11,7 +10,7 @@ export const Heading = styled.header`
 `;
 
 export const TopBar = styled.div`
-  margin: 0 50px;
+  margin: 30px 50px;
   max-width: 1280px;
   width: 100%;
   display: flex;
@@ -22,6 +21,11 @@ export const TopBar = styled.div`
 export const Logo = styled.img`
   width: 206px;
   height: 63px;
+
+  @media screen and (max-width: 867px) {
+    width: 100px;
+    height: 100%;
+  }
 `;
 
 export const NavList = styled.ul`
