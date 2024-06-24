@@ -24,6 +24,12 @@ export const InfoWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 8px;
+
+  font-family: 'Inter', sans-serif;
+`;
+
+export const InfoBody = styled.div`
+  max-width: 200px;
 `;
 
 export const Image = styled.img`
@@ -48,6 +54,6 @@ export const Artist = styled.p`
 
 export const Public = styled.p`
   font-size: 15.35px;
-  font-weight: ${(props) => props.theme.weights.medium};
+  font-weight: ${(props) => props.theme.weights.bold};
   color: #393939;
 `;

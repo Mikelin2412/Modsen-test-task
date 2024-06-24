@@ -54,7 +54,6 @@ export const NavElement = styled.li`
   list-style: none;
   padding: 0;
   margin: 0;
-  font-family: 'Inter', sans-serif;
   font-size: 18px;
   color: #fff;
   cursor: pointer;
@@ -72,6 +71,7 @@ export const NavElement = styled.li`
 `;
 
 export const Span = styled.span`
+  font-family: 'Inter', sans-serif;
   font-size: ${(props) => props.theme.sizes.p};
   font-weight: ${(props) => props.theme.weights.regular};
 `;

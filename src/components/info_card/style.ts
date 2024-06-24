@@ -22,6 +22,7 @@ export const InfoWrapper = styled.div`
 
 export const InfoBlock = styled.div`
   max-width: 220px;
+  font-family: 'Inter', sans-serif;
 
   @media screen and (max-width: 867px) {
     max-width: 130px;
