@@ -18,6 +18,7 @@ import {
 } from './style';
 import useFavorites from '@utils/hooks/useFavorites';
 import { LocalStorageFavProps } from '@utils/interfaces';
+import Loader from '@components/loader';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -62,16 +63,13 @@ const DetailedInfo: React.FC = () => {
     }
   }, [art]);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
   if (error) {
     return <h1>Error...</h1>;
   }
 
   return (
     <DetailWrapper>
+      {loading ? <Loader /> : null}
       {art && (
         <>
           <ImageWrapper>

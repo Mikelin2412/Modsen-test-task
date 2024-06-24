@@ -3,6 +3,7 @@ import { PaginationWrapper, PaginationBody } from './style';
 import PaginationCard from '@components/pagination_card';
 import { IArtworkData } from '@utils/interfaces';
 import PaginationControls from '@components/pagination_controls';
+import Loader from '@components/loader';
 
 const Pagination: React.FC = () => {
   const [arts, setArts] = useState(null);
@@ -40,27 +41,27 @@ const Pagination: React.FC = () => {
     fetchData(currentPage, artsLimit);
   }, [currentPage, artsLimit]);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
   if (error) {
     return <h1>Error...</h1>;
   }
 
   return (
     <PaginationWrapper>
-      <PaginationBody>
-        {arts.map((art: IArtworkData) => (
-          <PaginationCard
-            key={art.id}
-            id={art.id}
-            artName={art.title}
-            artistName={art.artist_title}
-            imageUrl={art.image}
-          />
-        ))}
-      </PaginationBody>
+      {loading ? (
+        <Loader />
+      ) : (
+        <PaginationBody>
+          {arts.map((art: IArtworkData) => (
+            <PaginationCard
+              key={art.id}
+              id={art.id}
+              artName={art.title}
+              artistName={art.artist_title}
+              imageUrl={art.image}
+            />
+          ))}
+        </PaginationBody>
+      )}
       <PaginationControls
         totalPages={totalPages}
         currentPage={currentPage}

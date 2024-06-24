@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CardsWrapper } from './style';
 import Card from '@components/info_card';
 import { IArtworkData } from '@utils/interfaces';
+import Loader from '@components/loader';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[] | null>(null);
@@ -13,7 +14,9 @@ const CardsContainer: React.FC = () => {
     const fetchData = async (limit: number) => {
       setLoading(true);
       try {
-        const response = await fetch(`https://api.artic.edu/api/v1/artworks?limit=${limit}`);
+        const response = await fetch(
+          `https://api.artic.edu/api/v1/artworks?page=21&limit=${limit}`,
+        );
         if (!response.ok) {
           throw new Error(`HTTP Error! Status code: ${response.status}`);
         }
@@ -33,26 +36,28 @@ const CardsContainer: React.FC = () => {
     fetchData(artsLimit);
   }, [artsLimit]);
 
-  if (loading) {
-    return <h1>Loading...</h1>;
-  }
-
   if (error) {
     return <h1>Error...</h1>;
   }
 
   return (
-    <CardsWrapper>
-      {arts.map((art) => (
-        <Card
-          key={art.id}
-          id={art.id}
-          artName={art.title}
-          artistName={art.artist_title}
-          imageUrl={art.image}
-        />
-      ))}
-    </CardsWrapper>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <CardsWrapper>
+          {arts.map((art) => (
+            <Card
+              key={art.id}
+              id={art.id}
+              artName={art.title}
+              artistName={art.artist_title}
+              imageUrl={art.image}
+            />
+          ))}
+        </CardsWrapper>
+      )}
+    </>
   );
 };
 
