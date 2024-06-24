@@ -11,6 +11,10 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Lexend Deca', sans-serif;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   #root {
     margin: 0 auto;
     min-height: 100vh;
