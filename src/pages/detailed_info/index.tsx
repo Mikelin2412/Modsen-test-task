@@ -90,7 +90,7 @@ const DetailedInfo: React.FC = () => {
                   art.id,
                   art.title,
                   art.artist_title,
-                  art.image,
+                  art.image ?? '',
                 )
               }
               isFavorite={isFavorite}
@@ -108,7 +108,7 @@ const DetailedInfo: React.FC = () => {
                 <ParamName>
                   Artist nationality:
                   <ParamValue>
-                    {extractNationality(art.artist_display) ?? 'N/A'}
+                    {extractNationality(art.artist_display ?? '') ?? 'N/A'}
                   </ParamValue>
                 </ParamName>
                 <ParamName>

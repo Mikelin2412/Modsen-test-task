@@ -37,13 +37,13 @@ const Pagination: React.FC = () => {
         <Loader />
       ) : (
         <PaginationBody>
-          {arts.map((art: IArtworkData) => (
+          {arts?.map((art: IArtworkData) => (
             <PaginationCard
               key={art.id}
               id={art.id}
               artName={art.title}
               artistName={art.artist_title}
-              imageUrl={art.image}
+              imageUrl={art.image ?? ''}
             />
           ))}
         </PaginationBody>

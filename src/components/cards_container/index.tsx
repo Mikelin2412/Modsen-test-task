@@ -6,7 +6,7 @@ import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
 
 const CardsContainer: React.FC = () => {
-  const [arts, setArts] = useState<IArtworkData[] | null>([]);
+  const [arts, setArts] = useState<IArtworkData[]>([]);
   const [artsLimit] = useState(12);
   const [sortOrder, setSortOrder] = useState<string>('title');
   const { data, loading, error } = useFetch<IArtworks>(
@@ -58,7 +58,7 @@ const CardsContainer: React.FC = () => {
               id={art.id}
               artName={art.title}
               artistName={art.artist_title}
-              imageUrl={art.image}
+              imageUrl={art.image ?? ''}
             />
           ))}
         </CardsWrapper>

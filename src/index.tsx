@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { Container, createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HOME_ROUTE, FAVORITES_ROUTE, DETAILED_INFO_ROUTE } from '@constants/user_routes';
 import Home from '@pages/home/index';
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root') as Container);
 root.render(
   <React.StrictMode>
       <RouterProvider router={router} />
