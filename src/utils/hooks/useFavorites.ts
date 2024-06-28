@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { LocalStorageFavProps } from '@utils/interfaces';
+import { useEffect, useState } from 'react';
 
 const useFavorites = (
   id?: number,

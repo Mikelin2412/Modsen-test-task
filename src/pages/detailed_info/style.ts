@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
-import styled from 'styled-components';
 import FavoritesButton from '@components/fav_button';
+import styled from 'styled-components';
 
 export const DetailWrapper = styled.div`
   margin: 60px 20px;

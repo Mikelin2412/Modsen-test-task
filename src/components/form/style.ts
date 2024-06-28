@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { Field, Form } from 'formik';
+import styled from 'styled-components';
 
 export const FieldContainer = styled.div`
   position: relative;

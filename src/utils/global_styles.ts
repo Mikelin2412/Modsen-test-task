@@ -1,6 +1,6 @@
-import { styled, createGlobalStyle } from 'styled-components';
-import lexendDeca from '@assets/fonts/Lexend_Deca/LexendDeca-VariableFont_wght.ttf';
 import inter from '@assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf';
+import lexendDeca from '@assets/fonts/Lexend_Deca/LexendDeca-VariableFont_wght.ttf';
+import { createGlobalStyle, styled } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   @font-face {
