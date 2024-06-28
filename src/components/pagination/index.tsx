@@ -5,6 +5,7 @@ import { IArtworkData, IArtworks } from '@utils/interfaces';
 import PaginationControls from '@components/pagination_controls';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
+import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
 
 const Pagination: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[] | null>([]);
@@ -12,13 +13,13 @@ const Pagination: React.FC = () => {
   const [artsLimit, setArtsLimit] = useState(3);
   const [totalPages, setTotalPages] = useState(0);
   const { data, loading, error } = useFetch<IArtworks>(
-    `https://api.artic.edu/api/v1/artworks?page=${currentPage}&limit=${artsLimit}`,
+    `${ALL_ARTWORKS_URL}?page=${currentPage}&limit=${artsLimit}`,
   );
 
   useEffect(() => {
     if (data && !loading && !error) {
       const transformedData = data.data.map((art: IArtworkData) => {
-        const imageUrl = `https://www.artic.edu/iiif/2/${art.image_id}/full/843,/0/default.jpg`;
+        const imageUrl = `${IMAGES_URL}${art.image_id}/full/843,/0/default.jpg`;
         return { ...art, image: imageUrl };
       });
       setArts(transformedData);

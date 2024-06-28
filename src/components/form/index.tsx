@@ -6,6 +6,7 @@ import { FieldContainer, DropdownMenu, DropdownItem } from './style';
 import { useNavigate } from 'react-router-dom';
 import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
 import { StyledField, StyledForm } from './style';
+import { ARTWORK_SEARCH_URL } from '@constants/environment';
 
 interface FormValues {
   artName: string;
@@ -32,7 +33,7 @@ const FormBody: React.FC = () => {
   const handleSearch = async (query: string) => {
     if (query) {
       const response = await fetch(
-        `https://api.artic.edu/api/v1/artworks/search?q=${query}`,
+        `${ARTWORK_SEARCH_URL}?q=${query}`,
       );
       const data = await response.json();
       setResults(data.data);

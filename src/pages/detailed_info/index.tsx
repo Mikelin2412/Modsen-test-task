@@ -20,18 +20,18 @@ import useFavorites from '@utils/hooks/useFavorites';
 import { LocalStorageFavProps } from '@utils/interfaces';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
+import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [art, setArt] = useState<IArtworkData | null>(null);
   const { isFavorite, setIsFavorite, handleSaveToFavorites } = useFavorites();
   const { data, loading, error } = useFetch<IArtworkFromAPI>(
-    `https://api.artic.edu/api/v1/artworks/${id}`,
+    `${ALL_ARTWORKS_URL}${id}`,
   );
 
   useEffect(() => {
     if (data && !loading && !error) {
-      console.log(data.data);
       const {
         id,
         title,
@@ -43,7 +43,7 @@ const DetailedInfo: React.FC = () => {
         credit_line,
         place_of_origin,
       } = data.data;
-      const imageUrl = `https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`;
+      const imageUrl = `${IMAGES_URL}${image_id}/full/843,/0/default.jpg`;
       setArt({
         id,
         title,

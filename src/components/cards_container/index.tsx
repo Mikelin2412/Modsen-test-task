@@ -4,19 +4,20 @@ import Card from '@components/info_card';
 import { IArtworkData, IArtworks } from '@utils/interfaces';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
+import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[]>([]);
   const [artsLimit] = useState(12);
   const [sortOrder, setSortOrder] = useState<string>('title');
   const { data, loading, error } = useFetch<IArtworks>(
-    `https://api.artic.edu/api/v1/artworks?page=21&limit=${artsLimit}`,
+    `${ALL_ARTWORKS_URL}?page=21&limit=${artsLimit}`,
   );
 
   useEffect(() => {
     if (data && !loading && !error) {
       const transformedData = data.data.map((art: IArtworkData) => {
-        const imageUrl = `https://www.artic.edu/iiif/2/${art.image_id}/full/843,/0/default.jpg`;
+        const imageUrl = `${IMAGES_URL}${art.image_id}/full/843,/0/default.jpg`;
         return { ...art, image: imageUrl };
       });
       setArts(transformedData);
