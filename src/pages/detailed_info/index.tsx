@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { IArtworkData } from '@utils/interfaces';
+import { IArtworkData, IArtworkFromAPI } from '@utils/interfaces';
 import { extractNationality } from '@utils/libs/libs';
 import {
   DetailWrapper,
@@ -19,35 +19,45 @@ import {
 import useFavorites from '@utils/hooks/useFavorites';
 import { LocalStorageFavProps } from '@utils/interfaces';
 import Loader from '@components/loader';
+import useFetch from '@utils/hooks/useFetch';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [art, setArt] = useState<IArtworkData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
   const { isFavorite, setIsFavorite, handleSaveToFavorites } = useFavorites();
+  const { data, loading, error } = useFetch<IArtworkFromAPI>(
+    `https://api.artic.edu/api/v1/artworks/${id}`,
+  );
 
   useEffect(() => {
-    const fetchArtDetails = async () => {
-      setLoading(true);
-      try {
-        const response = await fetch(`https://api.artic.edu/api/v1/artworks/${id}`);
-        if (!response.ok) {
-          throw new Error(`HTTP Error! Status code: ${response.status}`);
-        }
-        const result = await response.json();
-        const artDetails = result.data;
-        const imageUrl = `https://www.artic.edu/iiif/2/${artDetails.image_id}/full/843,/0/default.jpg`;
-        setArt({ ...artDetails, image: imageUrl });
-      } catch (e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArtDetails();
-  }, [id]);
+    if (data && !loading && !error) {
+      console.log(data.data);
+      const {
+        id,
+        title,
+        artist_title,
+        image_id,
+        date_display,
+        artist_display,
+        dimensions,
+        credit_line,
+        place_of_origin,
+      } = data.data;
+      const imageUrl = `https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`;
+      setArt({
+        id,
+        title,
+        artist_title,
+        image_id,
+        date_display,
+        artist_display,
+        dimensions,
+        credit_line,
+        place_of_origin,
+        image: imageUrl,
+      });
+    }
+  }, [id, data, loading, error]);
 
   useEffect(() => {
     if (art) {
@@ -80,7 +90,7 @@ const DetailedInfo: React.FC = () => {
                   art.id,
                   art.title,
                   art.artist_title,
-                  art.image,
+                  art.image ?? '',
                 )
               }
               isFavorite={isFavorite}
@@ -98,7 +108,7 @@ const DetailedInfo: React.FC = () => {
                 <ParamName>
                   Artist nationality:
                   <ParamValue>
-                    {extractNationality(art.artist_display) ?? 'N/A'}
+                    {extractNationality(art.artist_display ?? '') ?? 'N/A'}
                   </ParamValue>
                 </ParamName>
                 <ParamName>

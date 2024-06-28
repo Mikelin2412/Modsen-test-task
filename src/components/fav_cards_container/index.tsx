@@ -6,10 +6,12 @@ import useFavorites from '@utils/hooks/useFavorites';
 
 const FavCardsContainer: React.FC = () => {
   const [favorites, setFavorites] = useState<LocalStorageFavProps[]>([]);
-  const { handleRemoveFromFavorites } = useFavorites();
+  const { handleSaveToFavorites } = useFavorites();
 
   useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const storedFavorites = JSON.parse(
+      localStorage.getItem('favorites') || '[]',
+    );
     setFavorites(storedFavorites);
   }, []);
 
@@ -24,7 +26,14 @@ const FavCardsContainer: React.FC = () => {
               artName={el.artName}
               artistName={el.artistName}
               imageUrl={el.imageUrl}
-              handleFunction={handleRemoveFromFavorites}
+              handleFunction={() =>
+                handleSaveToFavorites(
+                  el.id,
+                  el.artName,
+                  el.artistName,
+                  el.imageUrl,
+                )
+              }
             />
           ))}
         </FavCardsWrapper>
