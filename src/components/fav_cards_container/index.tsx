@@ -19,9 +19,9 @@ const FavCardsContainer: React.FC = () => {
     <>
       {favorites.length ? (
         <FavCardsWrapper>
-          {favorites.map((el: LocalStorageFavProps, i: number) => (
+          {favorites.map((el: LocalStorageFavProps) => (
             <Card
-              key={i}
+              key={el.id}
               id={el.id}
               artName={el.artName}
               artistName={el.artistName}

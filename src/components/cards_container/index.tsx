@@ -10,7 +10,7 @@ import { ARTWORKS_LIMIT } from '@constants/constants';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[]>([]);
-  const [sortOrder, setSortOrder] = useState<string>('title');
+  const [sortOrder, setSortOrder] = useState<string>(SORT_VALUES[0].value);
   const { data, loading, error } = useFetch<IArtworks>(
     `${ALL_ARTWORKS_URL}?page=21&limit=${ARTWORKS_LIMIT}`,
   );
