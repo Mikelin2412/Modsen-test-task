@@ -6,12 +6,13 @@ import PaginationControls from '@components/pagination_controls';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
 import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
+import { INITIAL_COUNT_OF_PAGES, PAGINATION_LIMIT, START_PAGE } from '@constants/constants';
 
 const Pagination: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[] | null>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [artsLimit, setArtsLimit] = useState(3);
-  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(START_PAGE);
+  const [artsLimit, setArtsLimit] = useState(PAGINATION_LIMIT);
+  const [totalPages, setTotalPages] = useState(INITIAL_COUNT_OF_PAGES);
   const { data, loading, error } = useFetch<IArtworks>(
     `${ALL_ARTWORKS_URL}?page=${currentPage}&limit=${artsLimit}`,
   );

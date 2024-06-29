@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wrapper, PageButton } from './style';
 import { PaginationControlsProps } from '@utils/interfaces';
+import { MAX_VISIBLE_PAGES } from '@constants/constants';
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
   totalPages,
@@ -9,8 +10,7 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
 }) => {
   const generatePageNumbers = () => {
     const pages = [];
-    const maxVisiblePages = 5;
-    const halfVisible = Math.floor(maxVisiblePages / 2);
+    const halfVisible = Math.floor(MAX_VISIBLE_PAGES / 2);
     let startPage = Math.max(1, currentPage - halfVisible);
     let endPage = Math.min(totalPages, currentPage + halfVisible);
 

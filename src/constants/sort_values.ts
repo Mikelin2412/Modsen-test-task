@@ -1,4 +1,4 @@
-export const sortValues = [
+export const SORT_VALUES = [
   {
     id: '1',
     value: 'title',

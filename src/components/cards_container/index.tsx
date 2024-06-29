@@ -5,14 +5,14 @@ import { IArtworkData, IArtworks } from '@utils/interfaces';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
 import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
-import { sortValues } from '@constants/sort_values';
+import { SORT_VALUES } from '@constants/sort_values';
+import { ARTWORKS_LIMIT } from '@constants/constants';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[]>([]);
-  const [artsLimit] = useState(12);
   const [sortOrder, setSortOrder] = useState<string>('title');
   const { data, loading, error } = useFetch<IArtworks>(
-    `${ALL_ARTWORKS_URL}?page=21&limit=${artsLimit}`,
+    `${ALL_ARTWORKS_URL}?page=21&limit=${ARTWORKS_LIMIT}`,
   );
 
   useEffect(() => {
@@ -46,13 +46,11 @@ const CardsContainer: React.FC = () => {
           value={sortOrder}
           onChange={(e) => setSortOrder(e.target.value)}
         >
-          {
-            sortValues.map((el) => (
-              <option key={el.id} value={el.value}>{el.optionName}</option>
-            ))
-          }
-          <option value="title">Title</option>
-          <option value="artist_title">Artist Name</option>
+          {SORT_VALUES.map((el) => (
+            <option key={el.id} value={el.value}>
+              {el.optionName}
+            </option>
+          ))}
         </select>
       </SortButtonsWrapper>
       {loading ? (
