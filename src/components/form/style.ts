@@ -7,7 +7,7 @@ export const FieldContainer = styled.div`
 
 export const DropdownMenu = styled.div`
   position: absolute;
-  background: white;
+  background: ${(props) => props.theme.colors.dropdownMenu};
   border: 1px solid #ddd;
   max-height: 200px;
   overflow-y: auto;
@@ -20,7 +20,7 @@ export const DropdownItem = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: #f0f0f0;
+    background: ${(props) => props.theme.colors.dropdownItemHover};
   }
 `;
 
@@ -29,11 +29,11 @@ export const StyledField = styled(Field)`
   padding: 23.5px 16px;
   border: none;
   border-radius: 16px;
-  background-color: rgba(57, 57, 57, 5%);
-  font-size: 14px;
+  background-color: ${(props) => props.theme.colors.input};
+  font-size: ${(props) => props.theme.fonts.sizes.span};
   &:focus {
     outline: none;
-    border-color: #e0a449;
+    border-color: ${(props) => props.theme.colors.detailedWords};
     box-shadow: 0 0 5px rgba(224, 164, 73, 0.5);
   }
 `;

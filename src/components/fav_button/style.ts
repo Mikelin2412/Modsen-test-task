@@ -9,6 +9,8 @@ export const FavButton = styled.button<{ isFavorite: boolean }>`
   border: none;
   border-radius: 100%;
   background-color: ${(props) =>
-    props.isFavorite ? 'rgba(251, 215, 178, 100%)' : '#F9F9F9'};
+    props.isFavorite
+      ? props.theme.colors.favoriteButtonOn
+      : props.theme.colors.favoriteButtonOff};
   cursor: pointer;
 `;

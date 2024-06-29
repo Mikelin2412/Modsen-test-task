@@ -41,19 +41,19 @@ export const Image = styled.img`
 export const ArtName = styled.p`
   margin-top: 4px;
   font-size: 17.54px;
-  font-weight: ${(props) => props.theme.weights.medium};
-  color: #393939;
+  font-weight: ${(props) => props.theme.fonts.weights.medium};
+  color: ${(props) => props.theme.colors.font};
 `;
 
 export const Artist = styled.p`
   margin: 1px 0 12px;
   font-size: 15.35px;
-  font-weight: ${(props) => props.theme.weights.regular};
-  color: #e0a449;
+  font-weight: ${(props) => props.theme.fonts.weights.regular};
+  color: ${(props) => props.theme.colors.detailedWords};
 `;
 
 export const Public = styled.p`
   font-size: 15.35px;
-  font-weight: ${(props) => props.theme.weights.bold};
-  color: #393939;
+  font-weight: ${(props) => props.theme.fonts.weights.bold};
+  color: ${(props) => props.theme.colors.font};
 `;

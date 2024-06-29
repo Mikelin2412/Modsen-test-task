@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const CardBody = styled.div`
-  padding: 16px 13px;
+  padding: ${(props) => props.theme.paddings.s} 13px;
   display: flex;
   gap: 16px;
-  background-color: #fff;
+  background-color: ${(props) => props.theme.colors.cardBody};
   cursor: pointer;
 `;
 
@@ -24,28 +24,28 @@ export const InfoBlock = styled.div`
   max-width: 220px;
   font-family: 'Inter', sans-serif;
 
-  @media screen and (max-width: 867px) {
+  @media screen and (max-width: ${(props) => props.theme.media.tablet}) {
     max-width: 130px;
   }
 `;
 
 export const ArtName = styled.p`
   font-size: 17.54px;
-  font-weight: ${(props) => props.theme.weights.medium};
-  color: #393939;
+  font-weight: ${(props) => props.theme.fonts.weights.medium};
+  color: ${(props) => props.theme.colors.font};
 `;
 
 export const Artist = styled.p`
   margin: 1px 0 12px;
   font-size: 15.35px;
-  font-weight: ${(props) => props.theme.weights.regular};
-  color: #e0a449;
+  font-weight: ${(props) => props.theme.fonts.weights.regular};
+  color: ${(props) => props.theme.colors.detailedWords};
 `;
 
 export const Public = styled.p`
   font-size: 15.35px;
-  font-weight: ${(props) => props.theme.weights.medium};
-  color: #393939;
+  font-weight: ${(props) => props.theme.fonts.weights.medium};
+  color: ${(props) => props.theme.colors.font};
 `;
 
 export const FavoritesButton = styled.button`

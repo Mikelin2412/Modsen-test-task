@@ -10,30 +10,30 @@ export const LoaderBody = styled.div`
     position: absolute;
     width: 20px;
     height: 20px;
-    background: #262626;
+    background: ${(props) => props.theme.colors.loaderBackground};
     animation: animate 4s infinite forwards ease-in-out;
   }
 
   & > span:nth-child(1) {
-    background: #f17900;
+    background: ${(props) => props.theme.colors.loaderMainCube};
     left: -24px;
     top: -24px;
     animation-delay: 0.5s;
   }
   & > span:nth-child(2) {
-    background: #ffd4a8;
+    background: ${(props) => props.theme.colors.loaderAdditionalCube};
     left: 0px;
     top: -24px;
     animation-delay: 1s;
   }
   & > span:nth-child(4) {
-    background: #f17900;
+    background: ${(props) => props.theme.colors.loaderMainCube};
     left: -24px;
     top: 0px;
     animation-delay: 1.5s;
   }
   & > span:nth-child(3) {
-    background: #ffd4a8;
+    background: ${(props) => props.theme.colors.loaderAdditionalCube};
     left: 0px;
     top: 0px;
     animation-delay: 2s;

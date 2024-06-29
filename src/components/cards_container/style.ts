@@ -4,7 +4,7 @@ export const CardsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 16px;
-  margin-bottom: 120px;
+  margin-bottom: ${(props) => props.theme.margins.xxl};
   width: 100%;
 `;
 
@@ -20,11 +20,11 @@ export const SortButtonsWrapper = styled.div`
 
   select {
     font-family: 'Inter', sans-serif;
-    background-color: #f1f1f1;
+    background-color: ${(props) => props.theme.colors.select};
     border: none;
     border-radius: 12px;
     padding: 10px;
-    font-size: 16px;
+    font-size: ${(props) => props.theme.fonts.sizes.p};
     cursor: pointer;
   }
 `;
