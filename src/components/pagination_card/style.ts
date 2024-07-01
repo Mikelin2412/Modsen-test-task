@@ -1,3 +1,4 @@
+import { FONTS } from '@constants/static';
 import styled from 'styled-components';
 
 export const CardWrapper = styled.div`
@@ -25,7 +26,7 @@ export const InfoWrapper = styled.div`
   align-items: center;
   gap: 8px;
 
-  font-family: 'Inter', sans-serif;
+  font-family: ${FONTS.Inter.name}, sans-serif;
 `;
 
 export const InfoBody = styled.div`

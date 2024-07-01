@@ -1,3 +1,4 @@
+import { FONTS } from '@constants/static';
 import styled from 'styled-components';
 
 export const CardBody = styled.div`
@@ -22,7 +23,7 @@ export const InfoWrapper = styled.div`
 
 export const InfoBlock = styled.div`
   max-width: 220px;
-  font-family: 'Inter', sans-serif;
+  font-family: ${FONTS.Inter.name}, sans-serif;
 
   @media screen and (max-width: ${(props) => props.theme.media.tablet}) {
     max-width: 130px;

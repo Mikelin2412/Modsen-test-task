@@ -1,3 +1,4 @@
+import { FONTS } from '@constants/static';
 import styled from 'styled-components';
 
 export const CardsWrapper = styled.div`
@@ -19,7 +20,7 @@ export const SortButtonsWrapper = styled.div`
   }
 
   select {
-    font-family: 'Inter', sans-serif;
+    font-family: ${FONTS.Inter.name}, sans-serif;
     background-color: ${(props) => props.theme.colors.select};
     border: none;
     border-radius: 12px;

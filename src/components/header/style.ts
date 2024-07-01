@@ -1,4 +1,5 @@
 /* eslint-disable max-lines */
+import { FONTS } from '@constants/static';
 import styled from 'styled-components';
 
 export const Heading = styled.header`
@@ -71,7 +72,7 @@ export const NavElement = styled.li`
 `;
 
 export const Span = styled.span`
-  font-family: 'Inter', sans-serif;
+  font-family: ${FONTS.Inter.name}, sans-serif;
   font-size: ${(props) => props.theme.fonts.sizes.p};
   font-weight: ${(props) => props.theme.fonts.weights.regular};
 `;

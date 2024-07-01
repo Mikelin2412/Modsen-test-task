@@ -1,19 +1,18 @@
 /* eslint-disable max-lines */
-import inter from '@assets/fonts/Inter/Inter-VariableFont_slnt,wght.ttf';
-import lexendDeca from '@assets/fonts/Lexend_Deca/LexendDeca-VariableFont_wght.ttf';
+import { FONTS } from '@constants/static';
 import { createGlobalStyle, styled } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
   @font-face {
-    font-family: 'Lexend Deca';
-    src: url(${lexendDeca}) format('truetype');
+    font-family: ${FONTS.Lexend_deca.name};
+    src: url(${FONTS.Lexend_deca.path}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
-    font-family: 'Inter';
-    src: url(${inter}) format('truetype');
+    font-family: ${FONTS.Inter.name};
+    src: url(${FONTS.Inter.path}) format('truetype');
     font-weight: normal;
     font-style: normal;
   }
@@ -36,7 +35,7 @@ export const GlobalStyles = createGlobalStyle`
 
     display: flex;
     flex-direction: column;
-    font-family: 'Lexend Deca', sans-serif;
+    font-family: ${FONTS.Lexend_deca.name}, sans-serif;
   }
 `;
 
