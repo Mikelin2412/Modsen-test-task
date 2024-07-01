@@ -8,14 +8,3 @@ export const extractNationality = (str: string) => {
 
   return null;
 };
-
-export const debounce = <T extends (...args: Parameters<T>) => ReturnType<T>>(
-  func: T,
-  wait: number,
-) => {
-  let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<T>): void => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
-};
