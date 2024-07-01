@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { IArtworkData, IArtworkFromAPI } from '@utils/interfaces';
 import { extractNationality } from '@utils/libs/libs';
@@ -16,16 +16,15 @@ import {
   ImageWrapper,
   StyledFavoritesButton,
 } from './style';
-import useFavorites from '@utils/hooks/useFavorites';
-import { LocalStorageFavProps } from '@utils/interfaces';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
 import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
+import LocalStorageService from '@utils/classes/local_storage';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [art, setArt] = useState<IArtworkData | null>(null);
-  const { isFavorite, setIsFavorite, handleSaveToFavorites } = useFavorites();
+  const [isFavorite, setIsFavorite] = useState(false);
   const { data, loading, error } = useFetch<IArtworkFromAPI>(
     `${ALL_ARTWORKS_URL}${id}`,
   );
@@ -56,22 +55,38 @@ const DetailedInfo: React.FC = () => {
         place_of_origin,
         image: imageUrl,
       });
+      setIsFavorite(
+        LocalStorageService.checkIsFavorite({
+          id,
+          title,
+          artist_title,
+          image: imageUrl,
+        }),
+      );
     }
   }, [id, data, loading, error]);
 
-  useEffect(() => {
+  const handleFavorites = useCallback(() => {
     if (art) {
-      const existingFavorites = localStorage.getItem('favorites');
-      const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
-      const isAlreadyFavorite = favorites.some(
-        (item: LocalStorageFavProps) =>
-          item.artName === art.title &&
-          item.artistName === art.artist_title &&
-          item.imageUrl === art.image,
-      );
-      setIsFavorite(isAlreadyFavorite);
+      if (isFavorite) {
+        LocalStorageService.removeFromFavorites({
+          id: art.id,
+          title: art.title,
+          artist_title: art.artist_title,
+          image: art.image,
+        });
+      } else {
+        LocalStorageService.setFavorite({
+          id: art.id,
+          title: art.title,
+          artist_title: art.artist_title,
+          image: art.image,
+        });
+      }
+
+      setIsFavorite(!isFavorite);
     }
-  }, [art]);
+  }, [id, art, isFavorite]);
 
   if (error) {
     return <h1>Error...</h1>;
@@ -85,14 +100,7 @@ const DetailedInfo: React.FC = () => {
           <ImageWrapper>
             <Image src={art.image} alt={art.title} />
             <StyledFavoritesButton
-              handleFunction={() =>
-                handleSaveToFavorites(
-                  art.id,
-                  art.title,
-                  art.artist_title,
-                  art.image ?? '',
-                )
-              }
+              handleFunction={handleFavorites}
               isFavorite={isFavorite}
             />
           </ImageWrapper>

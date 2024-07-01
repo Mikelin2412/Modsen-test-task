@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   CardBody,
   Image,
@@ -9,21 +9,26 @@ import {
   Public,
 } from './style';
 import FavoritesButton from '@components/fav_button';
-import useFavorites from '@utils/hooks/useFavorites';
-import { LocalStorageFavProps } from '@utils/interfaces';
+import { IArtworkData, CardProps } from '@utils/interfaces';
 import { useNavigate } from 'react-router-dom';
 import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
+import LocalStorageService from '@utils/classes/local_storage';
 
-interface CardProps extends LocalStorageFavProps {
-  handleFunction?: () => void;
-}
-
-const Card: React.FC<CardProps> = ({ id, artName, artistName, imageUrl }) => {
-  const { isFavorite, handleSaveToFavorites } = useFavorites(
+const Card: React.FC<CardProps> = ({
+  id,
+  artName,
+  artistName,
+  imageUrl,
+  handleFunction,
+}) => {
+  const artwork: IArtworkData = {
     id,
-    artName,
-    artistName,
-    imageUrl,
+    title: artName,
+    artist_title: artistName,
+    image: imageUrl,
+  };
+  const [isFavorite, setIsFavorite] = useState(
+    LocalStorageService.checkIsFavorite(artwork),
   );
 
   const navigate = useNavigate();
@@ -33,6 +38,14 @@ const Card: React.FC<CardProps> = ({ id, artName, artistName, imageUrl }) => {
       navigate(DETAILED_INFO_ROUTE + `/${id}`);
     }
   };
+
+  const handleFavorites = useCallback(() => {
+    if (handleFunction) {
+      handleFunction(artwork);
+    }
+
+    setIsFavorite(!isFavorite);
+  }, [isFavorite, id, artName, artistName, imageUrl]);
 
   return (
     <CardBody onClick={handleNavigate}>
@@ -44,9 +57,7 @@ const Card: React.FC<CardProps> = ({ id, artName, artistName, imageUrl }) => {
           <Public>Public</Public>
         </InfoBlock>
         <FavoritesButton
-          handleFunction={() =>
-            handleSaveToFavorites(id, artName, artistName, imageUrl)
-          }
+          handleFunction={handleFavorites}
           isFavorite={isFavorite}
         />
       </InfoWrapper>

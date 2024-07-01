@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CardsWrapper, SortButtonsWrapper } from './style';
 import Card from '@components/info_card';
 import { IArtworkData, IArtworks } from '@utils/interfaces';
@@ -7,6 +7,7 @@ import useFetch from '@utils/hooks/useFetch';
 import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
 import { SORT_VALUES } from '@constants/sort_values';
 import { ARTWORKS_LIMIT } from '@constants/constants';
+import LocalStorageService from '@utils/classes/local_storage';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[]>([]);
@@ -32,6 +33,15 @@ const CardsContainer: React.FC = () => {
         : a.artist_title.localeCompare(b.artist_title);
     });
   };
+
+  const handleFavorites = useCallback((artwork: IArtworkData) => {
+    const isFavorite = LocalStorageService.checkIsFavorite(artwork);
+    if (!isFavorite) {
+      LocalStorageService.setFavorite(artwork);
+    } else {
+      LocalStorageService.removeFromFavorites(artwork);
+    }
+  }, [arts]);
 
   if (error) {
     return <h1>Error...</h1>;
@@ -64,6 +74,7 @@ const CardsContainer: React.FC = () => {
               artName={art.title}
               artistName={art.artist_title}
               imageUrl={art.image ?? ''}
+              handleFunction={handleFavorites}
             />
           ))}
         </CardsWrapper>

@@ -21,16 +21,17 @@ export interface IArtworkData {
   date_display?: string;
   dimensions?: string;
   credit_line?: string;
-  image?: string;
+  image: string;
   image_id?: string;
   place_of_origin?: string;
 }
 
-export interface LocalStorageFavProps {
+export interface CardProps {
   id: number;
   artName: string;
   artistName: string;
   imageUrl: string;
+  handleFunction?: (artwork: IArtworkData) => void;
 }
 
 export interface PaginationControlsProps {

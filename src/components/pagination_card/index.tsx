@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   CardWrapper,
   InfoWrapper,
@@ -8,25 +8,28 @@ import {
   Image,
   InfoBody,
 } from './style';
-import { LocalStorageFavProps } from '@utils/interfaces';
+import { IArtworkData, CardProps } from '@utils/interfaces';
 import FavoritesButton from '@components/fav_button';
-import useFavorites from '@utils/hooks/useFavorites';
 import { useNavigate } from 'react-router-dom';
 import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
+import LocalStorageService from '@utils/classes/local_storage';
 
-const PaginationCard: React.FC<LocalStorageFavProps> = ({
+const PaginationCard: React.FC<CardProps> = ({
   id,
   artName,
   artistName,
   imageUrl,
 }) => {
-  const { isFavorite, handleSaveToFavorites } = useFavorites(
+  const artwork: IArtworkData = {
     id,
-    artName,
-    artistName,
-    imageUrl,
-  );
+    title: artName,
+    artist_title: artistName,
+    image: imageUrl,
+  };
 
+  const [isFavorite, setIsFavorite] = useState(
+    LocalStorageService.checkIsFavorite(artwork),
+  );
   const navigate = useNavigate();
 
   const handleClick = (event: React.MouseEvent) => {
@@ -34,6 +37,16 @@ const PaginationCard: React.FC<LocalStorageFavProps> = ({
       navigate(DETAILED_INFO_ROUTE + `/${id}`);
     }
   };
+
+  const handleFavorites = useCallback(() => {
+    if (!isFavorite) {
+      LocalStorageService.setFavorite(artwork);
+    } else {
+      LocalStorageService.removeFromFavorites(artwork);
+    }
+
+    setIsFavorite(!isFavorite);
+  }, [isFavorite, id, artName, artistName, imageUrl]);
 
   return (
     <CardWrapper onClick={handleClick}>
@@ -45,9 +58,7 @@ const PaginationCard: React.FC<LocalStorageFavProps> = ({
           <Public>Public</Public>
         </InfoBody>
         <FavoritesButton
-          handleFunction={() =>
-            handleSaveToFavorites(id, artName, artistName, imageUrl)
-          }
+          handleFunction={handleFavorites}
           isFavorite={isFavorite}
         />
       </InfoWrapper>
