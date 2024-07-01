@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Wrapper, PageButton } from './style';
 import { PaginationControlsProps } from '@utils/interfaces';
+import { generatePagesForPagination } from '@utils/libs/libs';
 import { MAX_VISIBLE_PAGES } from '@constants/constants';
 
 const PaginationControls: React.FC<PaginationControlsProps> = ({
@@ -8,57 +9,52 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   currentPage,
   onPageChange,
 }) => {
-  const generatePageNumbers = () => {
-    const pages = [];
-    const halfVisible = Math.floor(MAX_VISIBLE_PAGES / 2);
-    let startPage = Math.max(1, currentPage - halfVisible);
-    let endPage = Math.min(totalPages, currentPage + halfVisible);
+  const pages = useMemo(
+    () =>
+      generatePagesForPagination(currentPage, totalPages, MAX_VISIBLE_PAGES),
+    [currentPage, totalPages],
+  );
 
-    if (currentPage - halfVisible < 1) {
-      endPage = Math.min(totalPages, endPage + (halfVisible - currentPage + 1));
-    }
-    if (currentPage + halfVisible > totalPages) {
-      startPage = Math.max(
-        1,
-        startPage - (currentPage + halfVisible - totalPages),
-      );
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
-
-    return pages;
-  };
+  const handleFirstPage = useCallback(() => onPageChange(1), [onPageChange]);
+  const handlePreviousPage = useCallback(
+    () => onPageChange(currentPage - 1),
+    [onPageChange, currentPage],
+  );
+  const handleNextPage = useCallback(
+    () => onPageChange(currentPage + 1),
+    [onPageChange, currentPage],
+  );
+  const handleLastPage = useCallback(
+    () => onPageChange(totalPages),
+    [onPageChange, totalPages],
+  );
+  const handlePageClick = useCallback(
+    (page: number) => () => onPageChange(page),
+    [onPageChange],
+  );
 
   return (
     <Wrapper>
       {currentPage > 1 && (
-        <PageButton onClick={() => onPageChange(1)}>&laquo;</PageButton>
+        <PageButton onClick={handleFirstPage}>&laquo;</PageButton>
       )}
       {currentPage > 1 && (
-        <PageButton onClick={() => onPageChange(currentPage - 1)}>
-          &lt;
-        </PageButton>
+        <PageButton onClick={handlePreviousPage}>&lt;</PageButton>
       )}
-      {generatePageNumbers().map((pageNumber) => (
+      {pages.map((pageNumber) => (
         <PageButton
           key={pageNumber}
           isActive={pageNumber === currentPage}
-          onClick={() => onPageChange(pageNumber)}
+          onClick={handlePageClick(pageNumber)}
         >
           {pageNumber}
         </PageButton>
       ))}
       {currentPage < totalPages && (
-        <PageButton onClick={() => onPageChange(currentPage + 1)}>
-          &gt;
-        </PageButton>
+        <PageButton onClick={handleNextPage}>&gt;</PageButton>
       )}
       {currentPage < totalPages && (
-        <PageButton onClick={() => onPageChange(totalPages)}>
-          &raquo;
-        </PageButton>
+        <PageButton onClick={handleLastPage}>&raquo;</PageButton>
       )}
     </Wrapper>
   );
