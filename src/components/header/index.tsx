@@ -56,7 +56,7 @@ const Header: React.FunctionComponent = () => {
           </NavList>
         </NavWrapper>
         {isMenuOpen && (
-          <MobileMenu>
+          <MobileMenu onClick={toggleMenu}>
             <NavList>
               {location.pathname !== HOME_ROUTE ? (
                 <Link to={HOME_ROUTE}>
