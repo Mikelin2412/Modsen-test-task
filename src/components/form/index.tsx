@@ -7,6 +7,7 @@ import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
 import { StyledField, StyledForm } from './style';
 import { ARTWORK_SEARCH_URL } from '@constants/environment';
 import useDebounce from '@utils/hooks/useDebounce';
+import { WARNING_MESSAGES } from '@constants/constants';
 
 interface FormValues {
   artName: string;
@@ -20,10 +21,17 @@ interface Artwork {
 const FormBody: React.FC = () => {
   const [results, setResults] = useState<Artwork[] | null>(null);
   const [isFocused, setIsFocused] = useState(false);
+  const [warningMessage, setWarningMessage] = useState(WARNING_MESSAGES.noArtworks);
   const navigate = useNavigate();
 
   const validationSchema = Yup.object({
-    artName: Yup.string(),
+    artName: Yup.string()
+      .matches(
+        /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~`№]*$/,
+        WARNING_MESSAGES.noSpecSymbols,
+      )
+      .min(1, WARNING_MESSAGES.minLength)
+      .nonNullable(),
   });
 
   const initialValues: FormValues = {
@@ -31,9 +39,19 @@ const FormBody: React.FC = () => {
   };
 
   const searchSuitableArtworks = useDebounce(async (query: string) => {
-    const response = await fetch(`${ARTWORK_SEARCH_URL}?q=${query}`);
-    const data = await response.json();
-    setResults(data.data);
+    try {
+      validationSchema.validateSync({ artName: query });
+      const encodedQuery = encodeURIComponent(query);
+      const response = await fetch(`${ARTWORK_SEARCH_URL}?q=${encodedQuery}`);
+      const data = await response.json();
+      setResults(data.data);
+      setWarningMessage(WARNING_MESSAGES.noArtworks);
+    } catch (err) {
+      if (err instanceof Error && err.name === 'ValidationError') {
+        setWarningMessage(err.message);
+      }
+      setResults([]);
+    }
   }, 300);
 
   const handleChange = useCallback(
@@ -87,7 +105,7 @@ const FormBody: React.FC = () => {
                     </DropdownItem>
                   ))
                 ) : (
-                  <DropdownItem>No artworks found</DropdownItem>
+                  <DropdownItem>{warningMessage}</DropdownItem>
                 )}
               </DropdownMenu>
             )}
