@@ -1,13 +1,5 @@
-export const extractNationality = (str: string) => {
-  const regex = /\n(.+?),/;
-  const match = str.match(regex);
-
-  if (match && match[1]) {
-    return match[1].trim();
-  }
-
-  return null;
-};
+import { SORT_VALUES } from '../../constants/sort_values';
+import { IArtworkData } from '../../utils/interfaces';
 
 export const generatePagesForPagination = (
   currentPage: number,
@@ -34,4 +26,35 @@ export const generatePagesForPagination = (
   }
 
   return pages;
+};
+
+export const sortArts = (
+  arts: IArtworkData[],
+  sortOrder: keyof IArtworkData,
+): IArtworkData[] => {
+  const sortConfig = SORT_VALUES.find((sort) => sort.value === sortOrder);
+
+  if (!sortConfig) {
+    return arts;
+  }
+
+  const result = [...arts].sort((a, b) => {
+    const valueA = a[sortConfig.value] ?? '';
+    const valueB = b[sortConfig.value] ?? '';
+
+    if (!valueA && !valueB) return 0;
+    if (!valueA) return 1;
+    if (!valueB) return -1;
+
+    switch (sortConfig.type) {
+      case 'string':
+        return (valueA as string).localeCompare(valueB as string);
+      case 'number':
+        return Number(valueA) - Number(valueB);
+      default:
+        return 0;
+    }
+  });
+
+  return result;
 };

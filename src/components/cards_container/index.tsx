@@ -8,6 +8,7 @@ import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
 import { SORT_VALUES } from '@constants/sort_values';
 import { ARTWORKS_LIMIT } from '@constants/constants';
 import LocalStorageService from '@utils/classes/local_storage';
+import { sortArts } from '@utils/libs/libs';
 
 const CardsContainer: React.FC = () => {
   const [arts, setArts] = useState<IArtworkData[]>([]);
@@ -26,13 +27,10 @@ const CardsContainer: React.FC = () => {
     }
   }, [data, loading, error]);
 
-  const sortArts = (arts: IArtworkData[], order: string) => {
-    return [...arts].sort((a, b) => {
-      return order === 'title'
-        ? a.title.localeCompare(b.title)
-        : a.artist_title.localeCompare(b.artist_title);
-    });
-  };
+  const sortedArts = useCallback(() => {
+    const sortedValue = sortArts(arts, sortOrder as keyof IArtworkData);
+    return sortedValue;
+  }, [arts, sortOrder]);
 
   const handleFavorites = useCallback((artwork: IArtworkData) => {
     const isFavorite = LocalStorageService.checkIsFavorite(artwork);
@@ -67,7 +65,7 @@ const CardsContainer: React.FC = () => {
         <Loader />
       ) : (
         <CardsWrapper>
-          {sortArts(arts, sortOrder).map((art) => (
+          {sortedArts().map((art) => (
             <Card
               key={art.id}
               id={art.id}

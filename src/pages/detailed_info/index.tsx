@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { IArtworkData, IArtworkFromAPI } from '@utils/interfaces';
-import { extractNationality } from '@utils/libs/libs';
 import {
   DetailWrapper,
   DetailInfo,
@@ -114,9 +113,9 @@ const DetailedInfo: React.FC = () => {
               <Overview>Overview</Overview>
               <ParamsWrapper>
                 <ParamName>
-                  Artist nationality:
+                  Artist display:
                   <ParamValue>
-                    {extractNationality(art.artist_display ?? '') ?? 'N/A'}
+                    {art.artist_display ?? 'N/A'}
                   </ParamValue>
                 </ParamName>
                 <ParamName>
