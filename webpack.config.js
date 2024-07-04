@@ -1,5 +1,6 @@
 const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 module.exports = {
@@ -53,9 +54,10 @@ module.exports = {
       template: './public/index.html',
     }),
     new Dotenv({
-      // path: `.env`,
-      // prefix: 'process.env.',
       systemvars: true,
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'public/_redirects', to: '.' }],
     }),
   ],
   devServer: {
