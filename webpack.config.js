@@ -55,6 +55,7 @@ module.exports = {
     new Dotenv({
       path: `./.env`,
       prefix: 'process.env.',
+      systemvars: true,
     }),
   ],
   devServer: {
