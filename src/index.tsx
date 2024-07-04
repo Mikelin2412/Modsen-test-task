@@ -1,7 +1,11 @@
 import React, { lazy } from 'react';
 import { Container, createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { HOME_ROUTE, FAVORITES_ROUTE, DETAILED_INFO_ROUTE } from '@constants/user_routes';
+import {
+  HOME_ROUTE,
+  FAVORITES_ROUTE,
+  DETAILED_INFO_ROUTE,
+} from '@constants/user_routes';
 import Layout from './layout';
 
 const Home = lazy(() => import('@pages/home/index'));
@@ -33,6 +37,6 @@ const router = createBrowserRouter([
 const root = createRoot(document.getElementById('root') as Container);
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 );

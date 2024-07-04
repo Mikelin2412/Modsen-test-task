@@ -3,15 +3,7 @@ import { useParams } from 'react-router-dom';
 import { IArtworkData, IArtworkFromAPI } from '@utils/interfaces';
 import {
   DetailWrapper,
-  DetailInfo,
   Image,
-  ArtName,
-  ArtistName,
-  Date,
-  Overview,
-  ParamName,
-  ParamValue,
-  ParamsWrapper,
   ImageWrapper,
   StyledFavoritesButton,
 } from './style';
@@ -19,6 +11,7 @@ import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
 import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
 import LocalStorageService from '@utils/classes/local_storage';
+import DetailedInfoBlock from '@components/detailed_info_block';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -103,35 +96,15 @@ const DetailedInfo: React.FC = () => {
               isFavorite={isFavorite}
             />
           </ImageWrapper>
-          <DetailInfo>
-            <div>
-              <ArtName>{art.title ?? 'N/A'}</ArtName>
-              <ArtistName>{art.artist_title ?? 'N/A'}</ArtistName>
-              <Date>{art.date_display ?? 'N/A'}</Date>
-            </div>
-            <div>
-              <Overview>Overview</Overview>
-              <ParamsWrapper>
-                <ParamName>
-                  Artist display:
-                  <ParamValue>
-                    {art.artist_display ?? 'N/A'}
-                  </ParamValue>
-                </ParamName>
-                <ParamName>
-                  Dimensions:<ParamValue>{art.dimensions ?? 'N/A'}</ParamValue>
-                </ParamName>
-                <ParamName>
-                  Credit Line:
-                  <ParamValue>{art.credit_line ?? 'N/A'}</ParamValue>
-                </ParamName>
-                <ParamName>
-                  Repository:
-                  <ParamValue>{art.place_of_origin ?? 'N/A'}</ParamValue>
-                </ParamName>
-              </ParamsWrapper>
-            </div>
-          </DetailInfo>
+          <DetailedInfoBlock
+            title={art.title}
+            artist_title={art.artist_title}
+            date_display={art.date_display}
+            artist_display={art.artist_display}
+            dimensions={art.dimensions}
+            credit_line={art.credit_line}
+            place_of_origin={art.place_of_origin}
+          />
         </>
       )}
     </DetailWrapper>
