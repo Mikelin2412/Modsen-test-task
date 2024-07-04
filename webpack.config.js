@@ -1,7 +1,8 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const Dotenv = require('dotenv-webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
-module.exports = {
+module.exports = (env) => ({
   mode: 'development',
   entry: './src/index.tsx',
   output: {
@@ -51,6 +52,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
+    new Dotenv({
+      path: `./.env.${env.production ? 'production' : 'development'}`,
+      prefix: 'process.env.',
+    }),
   ],
   devServer: {
     static: {
@@ -60,4 +65,4 @@ module.exports = {
     port: 3000,
     historyApiFallback: true,
   },
-};
+});

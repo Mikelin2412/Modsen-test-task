@@ -10,11 +10,9 @@ import {
   MobileMenu,
   NavWrapper,
 } from './style';
-import logo from '@assets/logos/museum-logo-light.svg';
-import bookmark from '@assets/icons/bookmark.svg';
-import home from '@assets/icons/home.svg';
 import { Link, useLocation } from 'react-router-dom';
 import { FAVORITES_ROUTE, HOME_ROUTE } from '@constants/user_routes';
+import { ICONS, LOGOS } from '@constants/static';
 
 const Header: React.FunctionComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,43 +33,49 @@ const Header: React.FunctionComponent = () => {
   return (
     <Heading>
       <TopBar>
-        <Logo src={logo} alt="logo" />
+        <Logo src={LOGOS.museum.light.path} alt={LOGOS.museum.light.name} />
         <NavWrapper>
           <NavList>
             {location.pathname !== HOME_ROUTE ? (
               <Link to={HOME_ROUTE}>
                 <NavElement>
-                  <img src={home} alt="home" />
+                  <img src={ICONS.home.path} alt={ICONS.home.name} />
                   <Span>Home</Span>
                 </NavElement>
               </Link>
             ) : null}
             <Link to={FAVORITES_ROUTE}>
               <NavElement>
-                <img src={bookmark} alt="bookmark" />
+                <img
+                  src={ICONS.bookmark.yellow.path}
+                  alt={ICONS.bookmark.yellow.name}
+                />
                 <Span>Your favorites</Span>
               </NavElement>
             </Link>
           </NavList>
         </NavWrapper>
         {isMenuOpen && (
-          <MobileMenu>
-              <NavList>
-                {location.pathname !== HOME_ROUTE ? (
-                  <Link to={HOME_ROUTE}>
-                    <NavElement onClick={toggleMenu}>
-                      <img src={home} alt="home" />
-                      <Span>Home</Span>
-                    </NavElement>
-                  </Link>
-                ) : null}
-                <Link to={FAVORITES_ROUTE}>
+          <MobileMenu onClick={toggleMenu}>
+            <NavList>
+              {location.pathname !== HOME_ROUTE ? (
+                <Link to={HOME_ROUTE}>
                   <NavElement onClick={toggleMenu}>
-                    <img src={bookmark} alt="bookmark" />
-                    <Span>Your favorites</Span>
+                    <img src={ICONS.home.path} alt={ICONS.home.name} />
+                    <Span>Home</Span>
                   </NavElement>
                 </Link>
-              </NavList>
+              ) : null}
+              <Link to={FAVORITES_ROUTE}>
+                <NavElement onClick={toggleMenu}>
+                  <img
+                    src={ICONS.bookmark.yellow.path}
+                    alt={ICONS.bookmark.yellow.name}
+                  />
+                  <Span>Your favorites</Span>
+                </NavElement>
+              </Link>
+            </NavList>
           </MobileMenu>
         )}
         <BurgerMenu onClick={toggleMenu}>
@@ -84,4 +88,4 @@ const Header: React.FunctionComponent = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

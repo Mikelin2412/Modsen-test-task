@@ -1,37 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { IArtworkData, IArtworkFromAPI } from '@utils/interfaces';
-import { extractNationality } from '@utils/libs/libs';
 import {
   DetailWrapper,
-  DetailInfo,
   Image,
-  ArtName,
-  ArtistName,
-  Date,
-  Overview,
-  ParamName,
-  ParamValue,
-  ParamsWrapper,
   ImageWrapper,
   StyledFavoritesButton,
 } from './style';
-import useFavorites from '@utils/hooks/useFavorites';
-import { LocalStorageFavProps } from '@utils/interfaces';
 import Loader from '@components/loader';
 import useFetch from '@utils/hooks/useFetch';
+import { ALL_ARTWORKS_URL, IMAGES_URL } from '@constants/environment';
+import LocalStorageService from '@utils/classes/local_storage';
+import DetailedInfoBlock from '@components/detailed_info_block';
 
 const DetailedInfo: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [art, setArt] = useState<IArtworkData | null>(null);
-  const { isFavorite, setIsFavorite, handleSaveToFavorites } = useFavorites();
+  const [isFavorite, setIsFavorite] = useState(false);
   const { data, loading, error } = useFetch<IArtworkFromAPI>(
-    `https://api.artic.edu/api/v1/artworks/${id}`,
+    `${ALL_ARTWORKS_URL}${id}`,
   );
 
   useEffect(() => {
     if (data && !loading && !error) {
-      console.log(data.data);
       const {
         id,
         title,
@@ -43,7 +34,7 @@ const DetailedInfo: React.FC = () => {
         credit_line,
         place_of_origin,
       } = data.data;
-      const imageUrl = `https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg`;
+      const imageUrl = `${IMAGES_URL}${image_id}/full/843,/0/default.jpg`;
       setArt({
         id,
         title,
@@ -56,22 +47,38 @@ const DetailedInfo: React.FC = () => {
         place_of_origin,
         image: imageUrl,
       });
+      setIsFavorite(
+        LocalStorageService.checkIsFavorite({
+          id,
+          title,
+          artist_title,
+          image: imageUrl,
+        }),
+      );
     }
   }, [id, data, loading, error]);
 
-  useEffect(() => {
+  const handleFavorites = useCallback(() => {
     if (art) {
-      const existingFavorites = localStorage.getItem('favorites');
-      const favorites = existingFavorites ? JSON.parse(existingFavorites) : [];
-      const isAlreadyFavorite = favorites.some(
-        (item: LocalStorageFavProps) =>
-          item.artName === art.title &&
-          item.artistName === art.artist_title &&
-          item.imageUrl === art.image,
-      );
-      setIsFavorite(isAlreadyFavorite);
+      if (isFavorite) {
+        LocalStorageService.removeFromFavorites({
+          id: art.id,
+          title: art.title,
+          artist_title: art.artist_title,
+          image: art.image,
+        });
+      } else {
+        LocalStorageService.setFavorite({
+          id: art.id,
+          title: art.title,
+          artist_title: art.artist_title,
+          image: art.image,
+        });
+      }
+
+      setIsFavorite(!isFavorite);
     }
-  }, [art]);
+  }, [id, art, isFavorite]);
 
   if (error) {
     return <h1>Error...</h1>;
@@ -85,46 +92,19 @@ const DetailedInfo: React.FC = () => {
           <ImageWrapper>
             <Image src={art.image} alt={art.title} />
             <StyledFavoritesButton
-              handleFunction={() =>
-                handleSaveToFavorites(
-                  art.id,
-                  art.title,
-                  art.artist_title,
-                  art.image ?? '',
-                )
-              }
+              handleFunction={handleFavorites}
               isFavorite={isFavorite}
             />
           </ImageWrapper>
-          <DetailInfo>
-            <div>
-              <ArtName>{art.title ?? 'N/A'}</ArtName>
-              <ArtistName>{art.artist_title ?? 'N/A'}</ArtistName>
-              <Date>{art.date_display ?? 'N/A'}</Date>
-            </div>
-            <div>
-              <Overview>Overview</Overview>
-              <ParamsWrapper>
-                <ParamName>
-                  Artist nationality:
-                  <ParamValue>
-                    {extractNationality(art.artist_display ?? '') ?? 'N/A'}
-                  </ParamValue>
-                </ParamName>
-                <ParamName>
-                  Dimensions:<ParamValue>{art.dimensions ?? 'N/A'}</ParamValue>
-                </ParamName>
-                <ParamName>
-                  Credit Line:
-                  <ParamValue>{art.credit_line ?? 'N/A'}</ParamValue>
-                </ParamName>
-                <ParamName>
-                  Repository:
-                  <ParamValue>{art.place_of_origin ?? 'N/A'}</ParamValue>
-                </ParamName>
-              </ParamsWrapper>
-            </div>
-          </DetailInfo>
+          <DetailedInfoBlock
+            title={art.title}
+            artist_title={art.artist_title}
+            date_display={art.date_display}
+            artist_display={art.artist_display}
+            dimensions={art.dimensions}
+            credit_line={art.credit_line}
+            place_of_origin={art.place_of_origin}
+          />
         </>
       )}
     </DetailWrapper>

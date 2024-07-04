@@ -1,21 +1,60 @@
-export const extractNationality = (str: string) => {
-  const regex = /\n(.+?),/;
-  const match = str.match(regex);
+import { SORT_VALUES } from '../../constants/sort_values';
+import { IArtworkData } from '../../utils/interfaces';
 
-  if (match && match[1]) {
-    return match[1].trim();
+export const generatePagesForPagination = (
+  currentPage: number,
+  totalPages: number,
+  maxVisiblePages: number,
+) => {
+  const pages = [];
+  const halfVisible = Math.floor(maxVisiblePages / 2);
+  let startPage = Math.max(1, currentPage - halfVisible);
+  let endPage = Math.min(totalPages, currentPage + halfVisible);
+
+  if (currentPage - halfVisible < 1) {
+    endPage = Math.min(totalPages, endPage + (halfVisible - currentPage + 1));
+  }
+  if (currentPage + halfVisible > totalPages) {
+    startPage = Math.max(
+      1,
+      startPage - (currentPage + halfVisible - totalPages),
+    );
   }
 
-  return null;
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(i);
+  }
+
+  return pages;
 };
 
-export const debounce = <T extends (...args: Parameters<T>) => ReturnType<T>>(
-  func: T,
-  wait: number,
-) => {
-  let timeout: ReturnType<typeof setTimeout>;
-  return (...args: Parameters<T>): void => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func(...args), wait);
-  };
+export const sortArts = (
+  arts: IArtworkData[],
+  sortOrder: keyof IArtworkData,
+): IArtworkData[] => {
+  const sortConfig = SORT_VALUES.find((sort) => sort.value === sortOrder);
+
+  if (!sortConfig) {
+    return arts;
+  }
+
+  const result = [...arts].sort((a, b) => {
+    const valueA = a[sortConfig.value] ?? '';
+    const valueB = b[sortConfig.value] ?? '';
+
+    if (!valueA && !valueB) return 0;
+    if (!valueA) return 1;
+    if (!valueB) return -1;
+
+    switch (sortConfig.type) {
+      case 'string':
+        return (valueA as string).localeCompare(valueB as string);
+      case 'number':
+        return Number(valueA) - Number(valueB);
+      default:
+        return 0;
+    }
+  });
+
+  return result;
 };

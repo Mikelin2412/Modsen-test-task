@@ -1,39 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import { FavCardsWrapper } from './style';
 import Card from '@components/info_card';
-import { LocalStorageFavProps } from '@utils/interfaces';
-import useFavorites from '@utils/hooks/useFavorites';
+import { IArtworkData } from '@utils/interfaces';
+import LocalStorageService from '@utils/classes/local_storage';
 
 const FavCardsContainer: React.FC = () => {
-  const [favorites, setFavorites] = useState<LocalStorageFavProps[]>([]);
-  const { handleSaveToFavorites } = useFavorites();
+  const [favorites, setFavorites] = useState<IArtworkData[]>(LocalStorageService.getFavorites());
 
-  useEffect(() => {
-    const storedFavorites = JSON.parse(
-      localStorage.getItem('favorites') || '[]',
-    );
-    setFavorites(storedFavorites);
-  }, []);
+  const handleRemoveFavorites = useCallback((favItem: IArtworkData) => {
+    LocalStorageService.removeFromFavorites(favItem);
+    setFavorites(LocalStorageService.getFavorites());
+  }, [favorites]);
 
   return (
     <>
       {favorites.length ? (
         <FavCardsWrapper>
-          {favorites.map((el: LocalStorageFavProps, i: number) => (
+          {favorites.map((el: IArtworkData) => (
             <Card
-              key={i}
+              key={el.id}
               id={el.id}
-              artName={el.artName}
-              artistName={el.artistName}
-              imageUrl={el.imageUrl}
-              handleFunction={() =>
-                handleSaveToFavorites(
-                  el.id,
-                  el.artName,
-                  el.artistName,
-                  el.imageUrl,
-                )
-              }
+              artName={el.title}
+              artistName={el.artist_title}
+              imageUrl={el.image}
+              handleFunction={handleRemoveFavorites}
             />
           ))}
         </FavCardsWrapper>
