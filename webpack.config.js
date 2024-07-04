@@ -53,8 +53,8 @@ module.exports = {
       template: './public/index.html',
     }),
     new Dotenv({
-      path: `./.env`,
-      prefix: 'process.env.',
+      // path: `.env`,
+      // prefix: 'process.env.',
       systemvars: true,
     }),
   ],
