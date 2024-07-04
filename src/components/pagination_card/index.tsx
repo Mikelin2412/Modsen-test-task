@@ -32,11 +32,14 @@ const PaginationCard: React.FC<CardProps> = ({
   );
   const navigate = useNavigate();
 
-  const handleClick = (event: React.MouseEvent) => {
-    if (!(event.target as HTMLElement).closest('button')) {
-      navigate(DETAILED_INFO_ROUTE + `/${id}`);
-    }
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent) => {
+      if (!(event.target as HTMLElement).closest('button')) {
+        navigate(DETAILED_INFO_ROUTE + `/${id}`);
+      }
+    },
+    [id, DETAILED_INFO_ROUTE],
+  );
 
   const handleFavorites = useCallback(() => {
     if (!isFavorite) {

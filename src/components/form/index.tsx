@@ -1,13 +1,12 @@
 import React, { useState, useCallback } from 'react';
 import { Formik, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { FieldContainer, DropdownMenu, DropdownItem } from './style';
-import { useNavigate } from 'react-router-dom';
-import { DETAILED_INFO_ROUTE } from '@constants/user_routes';
+import { FieldContainer } from './style';
 import { StyledField, StyledForm } from './style';
 import { ARTWORK_SEARCH_URL } from '@constants/environment';
 import useDebounce from '@utils/hooks/useDebounce';
 import { WARNING_MESSAGES } from '@constants/constants';
+import DropdownMenuComponent from '@components/dropdown_menu';
 
 interface FormValues {
   artName: string;
@@ -22,7 +21,6 @@ const FormBody: React.FC = () => {
   const [results, setResults] = useState<Artwork[] | null>(null);
   const [isFocused, setIsFocused] = useState(false);
   const [warningMessage, setWarningMessage] = useState(WARNING_MESSAGES.noArtworks);
-  const navigate = useNavigate();
 
   const validationSchema = Yup.object({
     artName: Yup.string()
@@ -90,24 +88,11 @@ const FormBody: React.FC = () => {
             />
             <ErrorMessage name="artName" render={renderError} />
             {isFocused && results && (
-              <DropdownMenu>
-                {results.length > 0 ? (
-                  results?.map((result) => (
-                    <DropdownItem
-                      key={result.id}
-                      onMouseDown={(e) => e.preventDefault()}
-                      onClick={() => {
-                        navigate(DETAILED_INFO_ROUTE + `/${result.id}`);
-                        setIsFocused(false);
-                      }}
-                    >
-                      {result.title}
-                    </DropdownItem>
-                  ))
-                ) : (
-                  <DropdownItem>{warningMessage}</DropdownItem>
-                )}
-              </DropdownMenu>
+              <DropdownMenuComponent
+                results={results}
+                warningMessage={warningMessage}
+                setIsFocused={setIsFocused}
+              />
             )}
           </FieldContainer>
         </StyledForm>

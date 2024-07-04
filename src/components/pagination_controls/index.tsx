@@ -60,4 +60,4 @@ const PaginationControls: React.FC<PaginationControlsProps> = ({
   );
 };
 
-export default PaginationControls;
+export default React.memo(PaginationControls);

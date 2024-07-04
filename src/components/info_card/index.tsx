@@ -33,11 +33,14 @@ const Card: React.FC<CardProps> = ({
 
   const navigate = useNavigate();
 
-  const handleNavigate = (event: React.MouseEvent) => {
-    if (!(event.target as HTMLElement).closest('button')) {
-      navigate(DETAILED_INFO_ROUTE + `/${id}`);
-    }
-  };
+  const handleNavigate = useCallback(
+    (event: React.MouseEvent) => {
+      if (!(event.target as HTMLElement).closest('button')) {
+        navigate(DETAILED_INFO_ROUTE + `/${id}`);
+      }
+    },
+    [id, DETAILED_INFO_ROUTE],
+  );
 
   const handleFavorites = useCallback(() => {
     if (handleFunction) {
@@ -65,4 +68,4 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default React.memo(Card);
