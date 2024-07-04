@@ -11,4 +11,4 @@ const FavoritesButton: React.FC<IButton> = ({ handleFunction, isFavorite, classN
   );
 };
 
-export default FavoritesButton;
+export default React.memo(FavoritesButton);

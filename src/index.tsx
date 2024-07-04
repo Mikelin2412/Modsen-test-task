@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import { Container, createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { HOME_ROUTE, FAVORITES_ROUTE, DETAILED_INFO_ROUTE } from '@constants/user_routes';
-import Home from '@pages/home/index';
-import Favorites from '@pages/favorites/index';
-import DetailedInfo from '@pages/detailed_info/index';
 import Layout from './layout';
+
+const Home = lazy(() => import('@pages/home/index'));
+const Favorites = lazy(() => import('@pages/favorites/index'));
+const DetailedInfo = lazy(() => import('@pages/detailed_info/index'));
 
 const router = createBrowserRouter([
   {
