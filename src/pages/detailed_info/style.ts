@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import FavoritesButton from '@components/fav_button';
 import styled from 'styled-components';
 
